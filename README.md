@@ -1,12 +1,12 @@
 # depth-delver 1.0-prealpha
-[Logo](Images/logo.png)
+![Logo](Images/logo.png)
 
 "UWP-Remake" of ITCH.io Depth Delver, fun game project. :)
 
 ## State / Status of R.E.
 - Init state / Draft / Early bird (MonoGame.Extended testing + some screen-scaling bugs in LD57 lib...)
 
-[W11](Images/sshot01.png)
+![W11](Images/sshot01.png)
 
 ## My 2 cents
 -  NET -> UWP
