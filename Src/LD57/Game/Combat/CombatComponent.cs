@@ -1,15 +1,11 @@
-﻿
+﻿// Decompiled with JetBrains decompiler
 // Type: LD57.Combat.CombatComponent
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Modded by [M]edia[E]xplorer
+// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
 
-using LD57.Breakables;
-using LD57.Enemies;
-using LD57.Objects;
-using LD57.Pickups; // =)
 using Microsoft.Xna.Framework;
-//using MonoGame.Extended;
+using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +28,8 @@ namespace LD57.Combat
     public DamageDesc m_damage = new DamageDesc();
     public int m_health = 1;
     public int m_maxHealth = 1;
-        private CombatManager combatManager;
-        private SnakeEnemyComponent snakeEnemyComponent;
-        private PlayerComponent playerComponent;
-        private BatEnemyComponent batEnemyComponent;
-        private BreakableComponent breakableComponent;
 
-        public CombatComponent(Entity parent, CombatManager manager, CombatImplementor implementor = null)
+    public CombatComponent(Entity parent, CombatManager manager, CombatImplementor implementor = null)
       : base(parent)
     {
       this.m_manager = manager;
@@ -51,36 +42,9 @@ namespace LD57.Combat
       this.m_timeouts = new List<DamageTimeout>();
     }
 
-        public CombatComponent(Entity parent, CombatManager combatManager, SnakeEnemyComponent snakeEnemyComponent) : base(parent)
-        {
-            this.combatManager = combatManager;
-            this.snakeEnemyComponent = snakeEnemyComponent;
-        }
+    public CombatImplementor GetImplementor() => this.m_implementor;
 
-        public CombatComponent(Entity parent, CombatManager combatManager, PlayerComponent playerComponent) : base(parent)
-        {
-            this.combatManager = combatManager;
-            this.playerComponent = playerComponent;
-        }
-
-        public CombatComponent(Entity parent, CombatManager combatManager, BatEnemyComponent batEnemyComponent) : base(parent)
-        {
-            this.combatManager = combatManager;
-            this.batEnemyComponent = batEnemyComponent;
-        }
-
-        public CombatComponent(Entity parent, CombatManager combatManager, BreakableComponent breakableComponent) : base(parent)
-        {
-            this.combatManager = combatManager;
-            this.breakableComponent = breakableComponent;
-        }
-
-        public CombatImplementor GetImplementor()
-        {
-            return this.m_implementor;
-        }
-
-        public bool ValidateHit(DamageDesc damage)
+    public bool ValidateHit(DamageDesc damage)
     {
       return this.m_implementor == null || this.m_implementor.ValidateHit(damage);
     }

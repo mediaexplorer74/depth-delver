@@ -1,16 +1,14 @@
-﻿
+﻿// Decompiled with JetBrains decompiler
 // Type: LD57.Objects.PlayerComponent
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Modded by [M]edia[E]xplorer
+// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
 
 using LD57.Combat;
-using LD57.Combat.GameManager.Combat;
 using LD57.Physics;
-using LD57.Pickups;
 using LD57.Spawn;
 using Microsoft.Xna.Framework;
-//using MonoGame.Extended;
+using MonoGame.Extended;
 using System;
 
 #nullable disable
@@ -71,7 +69,7 @@ namespace LD57.Objects
       this.m_physics.m_acceleration.Y = 640f;
       this.m_physics.m_collideAs = PhysicsComponent.CollideMask.Player;
       this.m_physics.m_collideWith = PhysicsComponent.CollideMask.WorldAll;
-      this.m_combat = new CombatComponent(this.GetParent(), level.GetCombatManager(), this);
+      this.m_combat = new CombatComponent(this.GetParent(), level.GetCombatManager(), (CombatImplementor) this);
       this.m_combat.m_attackBoxes.Add(new AABB(new Vector2(0.0f, 0.0f), 1f, 1f));
       this.m_combat.m_attackBoxes.Add(new AABB(new Vector2(0.0f, 0.0f), 2f, 2f));
       this.m_combat.m_defenseBoxes.Add(new AABB(new Vector2(0.0f, 1f), 7f, 8f));
@@ -120,20 +118,15 @@ namespace LD57.Objects
       switch (this.m_stateMachine.GetState())
       {
         case 0:
-          this.m_abilities = PlayerComponent.Ability.GroundMove
-                        | PlayerComponent.Ability.Jump | PlayerComponent.Ability.Fall
-                        | PlayerComponent.Ability.AirMove | PlayerComponent.Ability.Attack;
+          this.m_abilities = PlayerComponent.Ability.GroundMove | PlayerComponent.Ability.Jump | PlayerComponent.Ability.Fall | PlayerComponent.Ability.AirMove | PlayerComponent.Ability.Attack;
           this.m_anim.Play("Idle");
           break;
         case 1:
-          this.m_abilities = PlayerComponent.Ability.GroundMove
-                        | PlayerComponent.Ability.Jump | PlayerComponent.Ability.Fall 
-                        | PlayerComponent.Ability.AirMove | PlayerComponent.Ability.Attack;
+          this.m_abilities = PlayerComponent.Ability.GroundMove | PlayerComponent.Ability.Jump | PlayerComponent.Ability.Fall | PlayerComponent.Ability.AirMove | PlayerComponent.Ability.Attack;
           this.m_anim.Play("Walk");
           break;
         case 2:
-          this.m_abilities = PlayerComponent.Ability.AirMove 
-                        | PlayerComponent.Ability.Attack | PlayerComponent.Ability.FastFall;
+          this.m_abilities = PlayerComponent.Ability.AirMove | PlayerComponent.Ability.Attack | PlayerComponent.Ability.FastFall;
           this.m_anim.Play("Jump", 1, forceReset: true);
           this.m_physics.m_velocity.Y = -270f;
           this.m_coyoteTime = 0.0f;
@@ -213,8 +206,7 @@ namespace LD57.Objects
           this.m_abilities = PlayerComponent.Ability.AirMove | PlayerComponent.Ability.Attack;
           this.m_anim.Play("Jump", 1, forceReset: true);
           this.m_physics.m_velocity.Y = -225f;
-          this.m_physics.m_velocity.X = (float) (50.0 
-                        * (double) this.GetParent().m_facing.X + 10.0 * (double) this.GetInputDir());
+          this.m_physics.m_velocity.X = (float) (50.0 * (double) this.GetParent().m_facing.X + 10.0 * (double) this.GetInputDir());
           this.m_coyoteTime = 0.0f;
           this.m_jumpBuffer = 0.0f;
           AudioManager.PlaySFX("Jump");
@@ -288,8 +280,7 @@ namespace LD57.Objects
           }
           break;
         case 5:
-          if (this.m_physics.IsCollideGround() 
-                        && (double) this.m_stateMachine.GetStateTime() < 0.0833333358168602)
+          if (this.m_physics.IsCollideGround() && (double) this.m_stateMachine.GetStateTime() < 0.0833333358168602)
           {
             float inputDir = this.GetInputDir();
             if ((double) inputDir != 0.0)
@@ -327,16 +318,13 @@ namespace LD57.Objects
               break;
             }
           }
-          if (this.GetLevel().m_canGrapple && !this.m_grappleBlocked && this.m_hook == null
-                        && !this.m_physics.IsCollideGround())
+          if (this.GetLevel().m_canGrapple && !this.m_grappleBlocked && this.m_hook == null && !this.m_physics.IsCollideGround())
           {
             float time = 0.0f;
             Vector2 vector2_1 = new Vector2(5f, -1f) * this.GetParent().m_facing;
-            Vector2 vector2_2 = vector2_1 + new Vector2(this.m_whip.m_localPosition.X - 3f 
-                * this.GetParent().m_facing.X, 0.0f);
+            Vector2 vector2_2 = vector2_1 + new Vector2(this.m_whip.m_localPosition.X - 3f * this.GetParent().m_facing.X, 0.0f);
             AABB aabb1 = new AABB(vector2_1 + this.GetPos(), 1f, 1f);
-            if (this.GetLevel().GetPhysicsManager().SweepAABB(aabb1, attackBox, vector2_2 - vector2_1, 
-                PhysicsComponent.CollideMask.Solid, out time, out this.m_grapplePhyscis))
+            if (this.GetLevel().GetPhysicsManager().SweepAABB(aabb1, attackBox, vector2_2 - vector2_1, PhysicsComponent.CollideMask.Solid, out time, out this.m_grapplePhyscis))
             {
               this.m_grapplePoint = this.GetPos() + vector2_1 + (vector2_2 - vector2_1) * time;
               this.m_stateMachine.SetNextState(9);
@@ -480,8 +468,7 @@ namespace LD57.Objects
         this.m_coyoteTime = 0.166666672f;
       else if ((double) this.m_coyoteTime > 0.0)
         this.m_coyoteTime -= elapsedSeconds;
-      if ((this.m_abilities & PlayerComponent.Ability.GroundMove) != (PlayerComponent.Ability) 0 
-                && this.m_physics.IsCollideGround())
+      if ((this.m_abilities & PlayerComponent.Ability.GroundMove) != (PlayerComponent.Ability) 0 && this.m_physics.IsCollideGround())
       {
         float inputDir = this.GetInputDir();
         if ((double) inputDir != 0.0)
@@ -493,8 +480,7 @@ namespace LD57.Objects
           this.AccelToSpeed(450f, 1250f, 0.0f, elapsedSeconds);
         this.m_physics.Move(this.m_move);
       }
-      if ((this.m_abilities & PlayerComponent.Ability.AirMove) != (PlayerComponent.Ability) 0
-                && !this.m_physics.IsCollideGround())
+      if ((this.m_abilities & PlayerComponent.Ability.AirMove) != (PlayerComponent.Ability) 0 && !this.m_physics.IsCollideGround())
       {
         float inputDir = this.GetInputDir();
         if ((double) inputDir != 0.0)
@@ -513,8 +499,7 @@ namespace LD57.Objects
         if (this.m_physics.IsCollideGround())
         {
           if ((double) inputDir != 0.0)
-            this.AccelToSpeed(450f, 1250f, MathHelper.Lerp(100f, 0.0f,
-                MathHelper.Clamp(this.m_attackTime / 0.25f, 0.0f, 1f)) * inputDir, elapsedSeconds);
+            this.AccelToSpeed(450f, 1250f, MathHelper.Lerp(100f, 0.0f, MathHelper.Clamp(this.m_attackTime / 0.25f, 0.0f, 1f)) * inputDir, elapsedSeconds);
           else
             this.AccelToSpeed(450f, 1250f, 0.0f, elapsedSeconds);
         }
@@ -522,8 +507,7 @@ namespace LD57.Objects
         {
           float num3 = (double) inputDir == (double) this.GetParent().m_facing.X ? 100f : 90f;
           float accel = 300f;
-          float num4 = Math.Min(MathHelper.Lerp(num3, num3 / 1.25f,
-              MathHelper.Clamp(this.m_attackTime / 0.25f, 0.0f, 1f)), Math.Max(50f, Math.Abs(this.m_move.X)));
+          float num4 = Math.Min(MathHelper.Lerp(num3, num3 / 1.25f, MathHelper.Clamp(this.m_attackTime / 0.25f, 0.0f, 1f)), Math.Max(50f, Math.Abs(this.m_move.X)));
           this.AccelToSpeed(accel, 1250f, num4 * inputDir, elapsedSeconds);
           this.AccelToSpeed(450f, 1250f, num4 * inputDir, elapsedSeconds);
         }
@@ -532,8 +516,7 @@ namespace LD57.Objects
         this.m_physics.Move(this.m_move);
         this.m_attackTime += elapsedSeconds;
       }
-      if ((this.m_abilities & PlayerComponent.Ability.Jump) != (PlayerComponent.Ability) 0 
-                && (double) this.m_coyoteTime > 0.0 && (double) this.m_jumpBuffer > 0.0)
+      if ((this.m_abilities & PlayerComponent.Ability.Jump) != (PlayerComponent.Ability) 0 && (double) this.m_coyoteTime > 0.0 && (double) this.m_jumpBuffer > 0.0)
         this.m_stateMachine.SetNextState(2);
       if ((this.m_abilities & PlayerComponent.Ability.FastFall) != (PlayerComponent.Ability) 0)
       {
@@ -547,11 +530,9 @@ namespace LD57.Objects
       }
       else if ((double) this.m_physics.m_acceleration.Y == 1600.0)
         this.m_physics.m_acceleration.Y = 640f;
-      if ((this.m_abilities & PlayerComponent.Ability.Fall) != (PlayerComponent.Ability)
-                0 && !this.m_physics.IsCollideGround() && this.m_stateMachine.GetNextState() != 2)
+      if ((this.m_abilities & PlayerComponent.Ability.Fall) != (PlayerComponent.Ability) 0 && !this.m_physics.IsCollideGround() && this.m_stateMachine.GetNextState() != 2)
         this.m_stateMachine.SetNextState(3);
-      if ((this.m_abilities & PlayerComponent.Ability.Attack) != (PlayerComponent.Ability)
-                0 && (double) this.m_attackBuffer > 0.0)
+      if ((this.m_abilities & PlayerComponent.Ability.Attack) != (PlayerComponent.Ability) 0 && (double) this.m_attackBuffer > 0.0)
         this.m_stateMachine.SetNextState(5);
       if (!this.m_physics.IsCollideGround())
         return;

@@ -8,7 +8,7 @@ using LD57.Camera;
 using LD57.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-//using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Tiled;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,69 +37,32 @@ namespace LD57.Tiled
       this.m_depth = new List<float>();
       this.m_alpha = new List<float>();
       this.m_collision = new List<List<PhysicsComponent.CollideMask>>();
-
-            /*
-            for (int index1 = 0; index1 < this.m_tilemap.TileLayers.Count; ++index1)
+      for (int index1 = 0; index1 < this.m_tilemap.TileLayers.Count; ++index1)
+      {
+        TiledMapTileLayer tileLayer = this.m_tilemap.TileLayers[index1];
+        this.m_depth.Add(0.1f);
+        if (tileLayer.Properties.ContainsKey("depth"))
+          this.m_depth[index1] = MathHelper.Clamp(float.Parse(tileLayer.Properties["depth"].Value), 0.0f, 1f);
+        this.m_alpha.Add(1f);
+        this.m_collision.Add(new List<PhysicsComponent.CollideMask>());
+        for (int index2 = 0; index2 < ((IEnumerable<TiledMapTile>) tileLayer.Tiles).Count<TiledMapTile>(); ++index2)
+        {
+          this.m_collision[index1].Add(PhysicsComponent.CollideMask.None);
+          TiledMapTile tile = tileLayer.Tiles[index2];
+          TiledMapTileset tilesetByIdentifyer = this.GetTilesetByIdentifyer(tile.GlobalIdentifier);
+          int index3 = tile.GlobalIdentifier - this.m_tilemap.GetTilesetFirstGlobalIdentifier(tilesetByIdentifyer);
+          if (index3 >= 0 && index3 < tilesetByIdentifyer.Tiles.Count)
+          {
+            string type = tilesetByIdentifyer.Tiles[index3].Type;
+            for (int index4 = 0; index4 < TiledMapComponent.kCollisionTypeNames.Length; ++index4)
             {
-              TiledMapTileLayer tileLayer = this.m_tilemap.TileLayers[index1];
-              this.m_depth.Add(0.1f);
-              if (tileLayer.Properties.ContainsKey("depth"))
-                this.m_depth[index1] = MathHelper.Clamp(float.Parse(tileLayer.Properties["depth"].Value), 0.0f, 1f);
-              this.m_alpha.Add(1f);
-              this.m_collision.Add(new List<PhysicsComponent.CollideMask>());
-              for (int index2 = 0; index2 < ((IEnumerable<TiledMapTile>) tileLayer.Tiles).Count<TiledMapTile>(); ++index2)
-              {
-                this.m_collision[index1].Add(PhysicsComponent.CollideMask.None);
-                TiledMapTile tile = tileLayer.Tiles[index2];
-                TiledMapTileset tilesetByIdentifyer = this.GetTilesetByIdentifyer(tile.GlobalIdentifier);
-                int index3 = tile.GlobalIdentifier - this.m_tilemap.GetTilesetFirstGlobalIdentifier(tilesetByIdentifyer);
-                if (index3 >= 0 && index3 < tilesetByIdentifyer.Tiles.Count)
-                {
-                  string type = tilesetByIdentifyer.Tiles[index3].Type;
-                  for (int index4 = 0; index4 < TiledMapComponent.kCollisionTypeNames.Length; ++index4)
-                  {
-                    if (type.Equals(TiledMapComponent.kCollisionTypeNames[index4]))
-                      this.m_collision[index1][index2] = (PhysicsComponent.CollideMask) index4;
-                  }
-                }
-              }
-            }*/
-            //RnD
-            for (int index1 = 0; index1 < this.m_tilemap.TileLayers.Count(); ++index1)
-            {
-                // Use ElementAt or an equivalent method to access the layer at the specified index
-                TiledMapTileLayer tileLayer = this.m_tilemap.TileLayers.ElementAt(index1);
-
-                this.m_depth.Add(0.1f);
-                if (tileLayer.Properties.ContainsKey("depth"))
-                    this.m_depth[index1] = MathHelper.Clamp(
-                        float.Parse(tileLayer.Properties["depth"].ToString()/*.Value*/), 0.0f, 1f);
-
-                this.m_alpha.Add(1f);
-                this.m_collision.Add(new List<PhysicsComponent.CollideMask>());
-
-                for (int index2 = 0; index2 < ((IEnumerable<TiledMapTile>)tileLayer.Tiles).Count<TiledMapTile>(); ++index2)
-                {
-                    this.m_collision[index1].Add(PhysicsComponent.CollideMask.None);
-                    TiledMapTile tile = tileLayer.Tiles.ElementAt(index2); // Ensure Tiles supports ElementAt or similar
-                    TiledMapTileset tilesetByIdentifyer = this.GetTilesetByIdentifyer(tile.GlobalIdentifier);
-                    int index3 = tile.GlobalIdentifier - this.m_tilemap.GetTilesetFirstGlobalIdentifier(tilesetByIdentifyer);
-
-                    //RnD
-                    /*if (index3 >= 0 && index3 < tilesetByIdentifyer.Tiles.Count)
-                    {
-                        string type = tilesetByIdentifyer.Tiles[index3].Type;
-                        for (int index4 = 0; index4 < TiledMapComponent.kCollisionTypeNames.Length; ++index4)
-                        {
-                            if (type.Equals(TiledMapComponent.kCollisionTypeNames[index4]))
-                                this.m_collision[index1][index2] = (PhysicsComponent.CollideMask)index4;
-                        }
-                    }*/
-                }
+              if (type.Equals(TiledMapComponent.kCollisionTypeNames[index4]))
+                this.m_collision[index1][index2] = (PhysicsComponent.CollideMask) index4;
             }
-
-
-            this.m_camera = (GameCamera) null;
+          }
+        }
+      }
+      this.m_camera = (GameCamera) null;
     }
 
     public void SetCamera(GameCamera camera) => this.m_camera = camera;
@@ -112,13 +75,12 @@ namespace LD57.Tiled
 
     private TiledMapTileset GetTilesetByIdentifyer(int identifyer)
     {
-            //RnD
-      for (int index = /*this.m_tilemap.Tilesets.Count - 1*/0; index > 0; --index)
+      for (int index = this.m_tilemap.Tilesets.Count - 1; index > 0; --index)
       {
-        //if (identifyer >= this.m_tilemap.GetTilesetFirstGlobalIdentifier(this.m_tilemap.Tilesets[index]))
-        //  return this.m_tilemap.Tilesets[index];
+        if (identifyer >= this.m_tilemap.GetTilesetFirstGlobalIdentifier(this.m_tilemap.Tilesets[index]))
+          return this.m_tilemap.Tilesets[index];
       }
-      return default;//this.m_tilemap.Tilesets[0];
+      return this.m_tilemap.Tilesets[0];
     }
 
     public PhysicsComponent.CollideMask GetCollisionType(int layerIndex, int x, int y)
@@ -154,7 +116,7 @@ namespace LD57.Tiled
               {
                 if (yidx < this.m_tilemap.Height)
                 {
-                  for (int index = 0; /*index < this.m_tilemap.TileLayers.Count*/index < 1; ++index)
+                  for (int index = 0; index < this.m_tilemap.TileLayers.Count; ++index)
                   {
                     if ((this.m_collision[index][xidx + yidx * this.m_tilemap.Width] & mask) != PhysicsComponent.CollideMask.None)
                     {
@@ -191,9 +153,6 @@ namespace LD57.Tiled
       int num2 = Math.Min(this.m_tilemap.Width, (int) ((256.0 - (double) vector2.X) / (double) this.m_tilemap.TileWidth) + 1);
       int num3 = Math.Max(0, (int) (-(double) vector2.Y / (double) this.m_tilemap.TileHeight));
       int num4 = Math.Min(this.m_tilemap.Height, (int) ((144.0 - (double) vector2.Y) / (double) this.m_tilemap.TileHeight) + 1);
-      
-            //RnD
-            /*
       for (int index = 0; index < this.m_tilemap.TileLayers.Count; ++index)
       {
         if ((double) this.m_alpha[index] > 0.0)
@@ -217,9 +176,8 @@ namespace LD57.Tiled
               }
             }
           }
-         }
-        }*/
+        }
       }
     }
   }
-
+}

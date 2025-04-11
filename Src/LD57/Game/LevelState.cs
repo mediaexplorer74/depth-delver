@@ -15,15 +15,11 @@ using LD57.Spawn;
 using LD57.State;
 using LD57.Tiled;
 using Microsoft.Xna.Framework;
-using SharpDX.MediaFoundation;
-
-//using MonoGame.Extended;
-//using MonoGame.Extended.Tiled;
+using MonoGame.Extended;
+using MonoGame.Extended.Tiled;
 using System;
 using System.Collections.Generic;
-//using System.Drawing;
 using System.Linq;
-using Windows.Foundation;
 
 #nullable disable
 namespace LD57
@@ -77,26 +73,21 @@ namespace LD57
       this.m_stateMachine.SetNextState(Game1.s_debug ? 0 : 1);
     }
 
-        private void LoadMapEntities(bool init = false)
+    private void LoadMapEntities(bool init = false)
+    {
+      for (int index1 = 0; index1 < this.m_map.GetTiledMap().ObjectLayers.Count<TiledMapObjectLayer>(); ++index1)
+      {
+        TiledMapObjectLayer objectLayer = this.m_map.GetTiledMap().ObjectLayers[index1];
+        if (!objectLayer.Name.Equals("CAMERA"))
         {
-            foreach (var objectLayer in this.m_map.GetTiledMap().ObjectLayers)
-            {
-                if (!objectLayer.Name.Equals("CAMERA"))
-                {
-                    foreach (var tiledObject in objectLayer.Objects)
-                    {
-                        this.SpawnObject(tiledObject, init: init);
-                    }
-                }
-            }
+          for (int index2 = 0; index2 < ((IEnumerable<TiledMapObject>) objectLayer.Objects).Count<TiledMapObject>(); ++index2)
+            this.SpawnObject(objectLayer.Objects[index2], init: init);
         }
+      }
+      this.m_camera.SetTracking((GameObjectComponent) this.m_player);
+    }
 
-        private void SpawnObject(Camera.TiledMapObject tiledObject, bool init)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Entity SpawnObject(TiledMapObject obj, SpawnPoint spawnPoint = null, bool init = false)
+    public Entity SpawnObject(TiledMapObject obj, SpawnPoint spawnPoint = null, bool init = false)
     {
       SpawnData data = new SpawnData(obj);
       if (spawnPoint == null && !data.HasProperty("Persistent"))
@@ -367,7 +358,7 @@ namespace LD57
         {
           AABB aabb = new AABB(new Vector2((float) index1 + 0.5f, (float) index2 + 0.5f), 0.5f, 0.5f);
           if ((double) (vector2 - aabb.m_center).LengthSquared() > (double) num2)
-            SpriteManager.DrawAABB(aabb, Microsoft.Xna.Framework.Color.Black, (GameCamera) null, 1f);
+            SpriteManager.DrawAABB(aabb, Color.Black, (GameCamera) null, 1f);
         }
       }
     }
@@ -454,17 +445,4 @@ namespace LD57
       TransitionHold,
     }
   }
-    public class TiledMapObject
-    {
-        public string Name;
-        public int Id;
-        public int X;
-        public int Y;
-        public int Width;
-        public int Height;
-        public string Type;
-        public Dictionary<string, object> Properties;
-        internal Vector2 Position;
-        internal Size Size;
-    }
 }

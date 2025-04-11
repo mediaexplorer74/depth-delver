@@ -1,11 +1,12 @@
 # depth-delver 1.0-prealpha
-![Logo](Images/logo.png)
+[Logo](Images/logo.png)
 
 "UWP-Remake" of ITCH.io Depth Delver, fun game project. :)
 
 ## State / Status of R.E.
-- Damaged / Draft (MonoGame.Extended malfunction + bugs in LD57 lib...)
+- Init state / Draft / Early bird (MonoGame.Extended testing + some screen-scaling bugs in LD57 lib...)
 
+[W11](Images/sshot01.png)
 
 ## My 2 cents
 -  NET -> UWP
@@ -14,10 +15,10 @@
 ## Solution structure (architecture)
 - Depth_Delver "App starter" (in general, LD57 "wrapper") & Game content (xnb)
 - LD57 Kernel game lib 
-- MonoGame.Extended Experimental part of project (the goal is to improve/debug this "uwp-fork" of famous lib) 
+- MonoGame.Extended Experimental part of project (the goal is to improve/debug this "uwp-fork 4.0.4" of famous lib) 
 
 ## ToDo
-- Fix 100500 bugs (main goal is to made success of depth-delver game-runnning)
+- Fix screen-scaling bugs 
 - Add touchpanel support (fow old sweet win-phones/ win-tanblets/UMPCs...)
 
 ## Reference(s)

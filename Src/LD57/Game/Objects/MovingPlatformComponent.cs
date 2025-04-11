@@ -1,14 +1,13 @@
-﻿
+﻿// Decompiled with JetBrains decompiler
 // Type: LD57.Objects.MovingPlatformComponent
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Modded by [M]edia[E]xplorer
+// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
 
 using LD57.Physics;
-using LD57.Pickups;
 using LD57.Spawn;
 using Microsoft.Xna.Framework;
-//using MonoGame.Extended;
+using MonoGame.Extended;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,14 +1,14 @@
-﻿
+﻿// Decompiled with JetBrains decompiler
 // Type: LD57.Pickups.PickupComponent
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Modded by [M]edia[E]xplorer
+// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
 
 using LD57.Objects;
 using LD57.Physics;
 using LD57.Spawn;
 using Microsoft.Xna.Framework;
-//using MonoGame.Extended;
+using MonoGame.Extended;
 using System;
 
 #nullable disable
@@ -105,9 +105,7 @@ namespace LD57.Pickups
             this.GetParent().Destroy();
             break;
           }
-
-          //RnD
-          this.SetPos(this.GetPos() + vector2/*.NormalizedCopy()*/ * num);
+          this.SetPos(this.GetPos() + vector2.NormalizedCopy() * num);
           break;
       }
     }
@@ -126,13 +124,4 @@ namespace LD57.Pickups
       Follow,
     }
   }
-
-    // Add this extension method to provide the missing 'GetElapsedSeconds' functionality for GameTime.
-    public static class GameTimeExtensions
-    {
-        public static float GetElapsedSeconds(this GameTime gameTime)
-        {
-            return (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-    }
 }

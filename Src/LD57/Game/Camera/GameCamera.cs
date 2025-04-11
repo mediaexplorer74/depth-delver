@@ -5,9 +5,8 @@
 // Modded by [M]edia[E]xplorer
 
 using LD57.Objects;
-using LD57.Pickups;
 using Microsoft.Xna.Framework;
-//using MonoGame.Extended;
+using MonoGame.Extended;
 using System;
 
 #nullable disable
@@ -30,8 +29,9 @@ namespace LD57.Camera
       if (clampedTargetPos != this.m_position)
       {
         Vector2 vector2_1 = clampedTargetPos - this.m_position;
-        float y = this.m_tracking == null ? this.m_lerpFactor : MathHelper.Lerp(this.m_lerpFactor, this.m_lerpFactor * 5f, 
-            MathHelper.Clamp((float) (((double) this.m_tracking.GetPhysics().m_velocity.Y - 300.0) / 300.0), 0.0f, 1f));
+        float y = this.m_tracking == null
+                    ? this.m_lerpFactor 
+                    : MathHelper.Lerp(this.m_lerpFactor, this.m_lerpFactor * 5f, MathHelper.Clamp((float) (((double) this.m_tracking.GetPhysics().m_velocity.Y - 300.0) / 300.0), 0.0f, 1f));
         Vector2 vector2_2 = vector2_1 * new Vector2(this.m_lerpFactor, y);
         if ((double) vector2_2.LengthSquared() < (double) this.m_minVel * (double) this.m_minVel)
         {
@@ -62,7 +62,7 @@ namespace LD57.Camera
       this.m_position = this.GetClampedTargetPos();
     }
 
-    public Vector2 GetPosition() => this.m_position + (Vector2) this.m_shake.m_offset;
+    public Vector2 GetPosition() => this.m_position + /*(Vector2)*/ this.m_shake.m_offset;
 
     private Vector2 GetClampedTargetPos()
     {

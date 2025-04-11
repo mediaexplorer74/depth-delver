@@ -1,8 +1,8 @@
-﻿
+﻿// Decompiled with JetBrains decompiler
 // Type: LD57.AsepriteAnimData
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
+// Modded by [M]edia[E]xplorer
 
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -33,8 +33,7 @@ namespace LD57
     public Rectangle GetFrameSrcRect(int sequence, int frame)
     {
       AsepriteAnimFrame sequenceFrame = this.GetSequenceFrame(sequence, frame);
-      return new Rectangle(sequenceFrame.frame.x, sequenceFrame.frame.y, 
-          sequenceFrame.frame.w, sequenceFrame.frame.h);
+      return new Rectangle(sequenceFrame.frame.x, sequenceFrame.frame.y, sequenceFrame.frame.w, sequenceFrame.frame.h);
     }
 
     public float GetFrameDuration(int sequence, int frame)

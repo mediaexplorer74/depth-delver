@@ -2,8 +2,9 @@
 // Type: LD57.Breakables.DirtComponent
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
+// Modded by [M]edia[E]xplorer
 
+using LD57.Combat;
 using LD57.Spawn;
 using Microsoft.Xna.Framework;
 
@@ -21,5 +22,15 @@ namespace LD57.Breakables
       this.m_physics.SetExtents(new Vector2(16f, 16f));
       this.m_combat.m_defenseBoxes[0] = new AABB(Vector2.Zero, 16f, 16f);
     }
-  }
+
+        public override void OnDealHit(DamageDesc damage)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override bool ValidateHit(DamageDesc damage)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }

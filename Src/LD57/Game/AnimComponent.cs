@@ -1,14 +1,13 @@
-﻿
+﻿// Decompiled with JetBrains decompiler
 // Type: LD57.AnimComponent
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Modded by [M]edia[E]xplorer
+// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
 
 using LD57.Camera;
-using LD57.Pickups;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-//using MonoGame.Extended;
+using MonoGame.Extended;
 using System;
 
 #nullable disable
@@ -61,9 +60,7 @@ namespace LD57
       if (this.m_paused || this.m_loops == 0 || this.m_sequenceIdx < 0)
         return;
       this.m_frameTime += (float) gameTime.ElapsedGameTime.TotalSeconds * this.m_playrate;
-      for (float frameDuration = this.GetFrameDuration(this.m_sequenceIdx, this.m_frameIdx); 
-                (double) this.m_frameTime >= (double) frameDuration; 
-                frameDuration = this.GetFrameDuration(this.m_sequenceIdx, this.m_frameIdx))
+      for (float frameDuration = this.GetFrameDuration(this.m_sequenceIdx, this.m_frameIdx); (double) this.m_frameTime >= (double) frameDuration; frameDuration = this.GetFrameDuration(this.m_sequenceIdx, this.m_frameIdx))
       {
         this.m_frameTime -= frameDuration;
         ++this.m_frameIdx;

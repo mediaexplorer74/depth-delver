@@ -2,8 +2,9 @@
 // Type: LD57.Breakables.DoorComponent
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
+// Modded by [M]edia[E]xplorer
 
+using LD57.Combat;
 using LD57.Spawn;
 using Microsoft.Xna.Framework;
 
@@ -20,7 +21,17 @@ namespace LD57.Breakables
       this.m_combat.m_defenseBoxes[0] = new AABB(Vector2.Zero, 8f, 16f);
     }
 
-    protected override bool CanBreak() => this.GetLevel().m_key;
+        public override void OnDealHit(DamageDesc damage)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override bool ValidateHit(DamageDesc damage)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override bool CanBreak() => this.GetLevel().m_key;
 
     protected override void OnBreak()
     {

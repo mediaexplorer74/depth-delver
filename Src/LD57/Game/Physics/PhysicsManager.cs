@@ -1,12 +1,12 @@
-﻿
+﻿// Decompiled with JetBrains decompiler
 // Type: LD57.Physics.PhysicsManager
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Modded by [M]edia[E]xplorer
+// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
 
 using LD57.Tiled;
 using Microsoft.Xna.Framework;
-//using MonoGame.Extended;
+using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,9 +106,7 @@ namespace LD57.Physics
             if (this.m_debugDraw)
               this.m_col.Add(hit[index]);
           }
-
-          move = (float) ((double) move * (double) num1 + 1.0 
-                        / 1000.0 /** (double) Math.Sign(vector1.Dot(axis))*/);
+          move = (float) ((double) move * (double) num1 + 1.0 / 1000.0 * (double) Math.Sign(vector1.Dot(axis)));
         }
         float num2 = float.MaxValue;
         m_aabb = aabb1;
@@ -117,8 +115,7 @@ namespace LD57.Physics
         for (int index = 0; index < this.m_walls.Count<PhysicsComponent>(); ++index)
         {
           PhysicsComponent wall = this.m_walls[index];
-          if (physics != wall && !wall.GetParent().IsDestroyed() 
-                        && (wall.m_collideAs & collideWith) != PhysicsComponent.CollideMask.None)
+          if (physics != wall && !wall.GetParent().IsDestroyed() && (wall.m_collideAs & collideWith) != PhysicsComponent.CollideMask.None)
           {
             AABB aabb2 = wall.GetAABB();
             float time;
@@ -140,29 +137,21 @@ namespace LD57.Physics
         {
           if ((double) vector1.Y < 0.0)
             physicsComponent.m_carry.Add(physics);
-          move = (float) ((double) move * (double) num2 + 1.0 / 1000.0
-                        /* * (double) Math.Sign(vector1.Dot(axis))*/);
+          move = (float) ((double) move * (double) num2 + 1.0 / 1000.0 * (double) Math.Sign(vector1.Dot(axis)));
         }
-        //RnD
-        if (true)//((double) vector1.Dot(axis) != 0.0)
+        if ((double) vector1.Dot(axis) != 0.0)
         {
-           bool flag = true;//(double) vector1.Dot(axis) > 0.0;
-           float num3 = 0f;
-           if (Vector2.Dot(vector1, axis) != 0.0)
-              num3 = 0f;// !flag ? Math.Min(physics.m_velocity.Dot(axis), 0.0f) : Math.Max(physics.m_velocity.Dot(axis), 0.0f);
+          bool flag = (double) vector1.Dot(axis) > 0.0;
+          float num3 = !flag ? Math.Min(physics.m_velocity.Dot(axis), 0.0f) : Math.Max(physics.m_velocity.Dot(axis), 0.0f);
           if ((double) axis.X != 0.0)
           {
             physics.m_velocity.X = num3;
-            physics.m_lastCollideDir |= flag 
-                            ? PhysicsComponent.CollideDir.Left 
-                            : PhysicsComponent.CollideDir.Right;
+            physics.m_lastCollideDir |= flag ? PhysicsComponent.CollideDir.Left : PhysicsComponent.CollideDir.Right;
           }
           else
           {
             physics.m_velocity.Y = num3;
-            physics.m_lastCollideDir |= flag 
-                            ? PhysicsComponent.CollideDir.Up 
-                            : PhysicsComponent.CollideDir.Down;
+            physics.m_lastCollideDir |= flag ? PhysicsComponent.CollideDir.Up : PhysicsComponent.CollideDir.Down;
           }
         }
       }

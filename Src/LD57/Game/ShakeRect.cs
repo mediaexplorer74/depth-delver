@@ -1,13 +1,12 @@
-﻿
+﻿// Decompiled with JetBrains decompiler
 // Type: LD57.ShakeRect
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Modded by [M]edia[E]xplorer
+// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
 
+using Microsoft.Xna.Framework;
 using System;
 //using System.Numerics;
-using Microsoft.Xna.Framework; //RnD
-
 
 #nullable disable
 namespace LD57
@@ -49,7 +48,8 @@ namespace LD57
       if ((double) this.m_time == 0.0)
         this.m_offset = Vector2.Zero;
       else
-        this.m_offset = new Vector2(RandomUtil.RandF(-this.m_amount, this.m_amount), RandomUtil.RandF(-this.m_amount, this.m_amount));
+        this.m_offset = new Vector2(RandomUtil.RandF(-this.m_amount, this.m_amount), 
+            RandomUtil.RandF(-this.m_amount, this.m_amount));
     }
   }
 }

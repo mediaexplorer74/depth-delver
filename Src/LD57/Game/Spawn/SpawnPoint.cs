@@ -1,8 +1,8 @@
-﻿
+﻿// Decompiled with JetBrains decompiler
 // Type: LD57.Spawn.SpawnPoint
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Modded by [M]edia[E]xplorer
+// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
 
 using LD57.Camera;
 using Microsoft.Xna.Framework;
@@ -21,8 +21,7 @@ namespace LD57.Spawn
     public SpawnPoint(SpawnData data, LevelState level)
     {
       this.m_data = data;
-      this.m_room = level.GetRoomManager().GetRoomByPos(data.GetObject().Position 
-          + (Microsoft.Xna.Framework.Vector2) new Vector2(8f, -8f));
+      this.m_room = level.GetRoomManager().GetRoomByPos(data.GetObject().Position + new Vector2(8f, -8f));
       this.m_dead = false;
       this.m_level = level;
       this.m_entity = (Entity) null;

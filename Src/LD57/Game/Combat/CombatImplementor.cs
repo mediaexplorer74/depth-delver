@@ -7,35 +7,14 @@
 #nullable disable
 namespace LD57.Combat
 {
-#nullable disable
-    namespace GameManager.Combat
-    {
-        public interface CombatImplementor
-        {
-            bool ValidateHit(DamageDesc damage);
+  public interface CombatImplementor
+  {
+        bool ValidateHit(DamageDesc damage);// => true;
 
-            void OnTakeDamage(DamageDesc damage);
+        void OnTakeDamage(DamageDesc damage); //{}
 
-            void OnDealHit(DamageDesc damage);
+        void OnDealHit(DamageDesc damage);//{}
 
-            void OnDeath(DamageDesc damage);
-        }
-
-        public class DefaultCombatImplementor : CombatImplementor
-        {
-            public bool ValidateHit(DamageDesc damage) => true;
-
-            public void OnTakeDamage(DamageDesc damage)
-            {
-            }
-
-            public void OnDealHit(DamageDesc damage)
-            {
-            }
-
-            public void OnDeath(DamageDesc damage)
-            {
-            }
-        }
-    }
+        void OnDeath(DamageDesc damage); //{}    
+  }
 }

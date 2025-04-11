@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework;
 #nullable disable
 namespace LD57.Breakables
 {
-  public abstract class BreakableComponent : GameObjectComponent//, CombatImplementor
+  public abstract class BreakableComponent : GameObjectComponent, CombatImplementor
   {
     private float m_dir;
 
@@ -27,7 +27,7 @@ namespace LD57.Breakables
       this.m_physics = new PhysicsComponent(parent, this.GetLevel().GetPhysicsManager(), true);
       this.m_physics.SetExtents(new Vector2(8f, 8f));
       this.m_physics.m_collideAs = PhysicsComponent.CollideMask.Object;
-      this.m_combat = new CombatComponent(parent, this.GetLevel().GetCombatManager(), this);
+      this.m_combat = new CombatComponent(parent, this.GetLevel().GetCombatManager(), (CombatImplementor) this);
       this.m_combat.m_defenseBoxes.Add(this.m_physics.GetAABB(true));
       this.m_combat.m_defenseMask = CombatComponent.CombatMask.Object;
     }
@@ -98,7 +98,10 @@ namespace LD57.Breakables
       }
     }
 
-    private enum State
+        public abstract bool ValidateHit(DamageDesc damage);
+        public abstract void OnDealHit(DamageDesc damage);
+
+        private enum State
     {
       Idle,
       Break,

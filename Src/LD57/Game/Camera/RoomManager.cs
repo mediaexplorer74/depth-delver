@@ -1,12 +1,11 @@
-﻿
+﻿// Decompiled with JetBrains decompiler
 // Type: LD57.Camera.RoomManager
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Modded by [M]edia[E]xplorer
+// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
 
-using LD57.Tiled;
 using Microsoft.Xna.Framework;
-//using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Tiled;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -81,14 +80,8 @@ namespace LD57.Camera
           for (int index2 = 0; index2 < ((IEnumerable<TiledMapObject>) objectLayer.Objects).Count<TiledMapObject>(); ++index2)
           {
             TiledMapObject tiledMapObject = objectLayer.Objects[index2];
-
             if (tiledMapObject.Type.Equals("Room"))
-              this.m_rooms.Add(new Room(new AABB(tiledMapObject.Position, 
-                  tiledMapObject.Position + 
-                  new Vector2(
-                      (float)tiledMapObject.Size.Width, 
-                      (float)tiledMapObject.Size.Height)
-                  )));
+              this.m_rooms.Add(new Room(new AABB(tiledMapObject.Position, tiledMapObject.Position + new Vector2(tiledMapObject.Size.Width, tiledMapObject.Size.Height))));
           }
         }
       }

@@ -1,16 +1,15 @@
-﻿
+﻿// Decompiled with JetBrains decompiler
 // Type: LD57.Enemies.SnakeEnemyComponent
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
-// Modded by [M]edia[E]xplorer
+// Assembly location: C:\Users\Admin\Desktop\RE\DepthDelver\LD57.dll
 
-using System;
 using LD57.Combat;
 using LD57.Physics;
 using LD57.Spawn;
 using Microsoft.Xna.Framework;
-//using MonoGame.Extended;
-
+using MonoGame.Extended;
+using System;
 
 #nullable disable
 namespace LD57.Enemies
@@ -34,8 +33,7 @@ namespace LD57.Enemies
       this.m_physics.m_acceleration.Y = 640f;
       this.m_physics.m_collideAs = PhysicsComponent.CollideMask.Enemy;
       this.m_physics.m_collideWith = PhysicsComponent.CollideMask.WorldAll;
-      this.m_combat = new CombatComponent(this.GetParent(), level.GetCombatManager(),
-          this);
+      this.m_combat = new CombatComponent(this.GetParent(), level.GetCombatManager(), (CombatImplementor) this);
       this.m_combat.m_attackBoxes.Add(new AABB(new Vector2(0.0f, 2f), 7f, 8f));
       this.m_combat.m_defenseBoxes.Add(new AABB(new Vector2(0.0f, 2f), 7f, 8f));
       this.m_combat.m_attackMask = CombatComponent.CombatMask.Player;
@@ -59,10 +57,7 @@ namespace LD57.Enemies
     {
       if (this.m_stateMachine.GetState() == 1)
       {
-        if (this.m_physics.IsCollideDir(this.GetParent().GetFacingX())
-                    || !this.GetLevel().GetPhysicsManager().Overlap(
-                        new AABB(this.GetPos() + new Vector2(this.GetParent().m_facing.X * 16f, 8f), 6f, 8f),
-                        this.m_physics.m_collideWith, true))
+        if (this.m_physics.IsCollideDir(this.GetParent().GetFacingX()) || !this.GetLevel().GetPhysicsManager().Overlap(new AABB(this.GetPos() + new Vector2(this.GetParent().m_facing.X * 16f, 8f), 6f, 8f), this.m_physics.m_collideWith, true))
         {
           this.GetParent().m_facing.X *= -1f;
           this.m_flipTime = 0.0833333358f;
@@ -71,17 +66,12 @@ namespace LD57.Enemies
         {
           float sequenceFrameDuration = this.m_anim.GetCurSequenceFrameDuration(0);
           float num1 = this.m_anim.GetCurSequenceDuration() - sequenceFrameDuration;
-          float num2 = (float) ((0.5 - (double) Math.Abs(
-              (this.m_anim.GetSequenceTime() - sequenceFrameDuration) / num1 - 0.5f)) * 2.0);
+          float num2 = (float) ((0.5 - (double) Math.Abs((this.m_anim.GetSequenceTime() - sequenceFrameDuration) / num1 - 0.5f)) * 2.0);
           if ((double) this.m_flipTime > 0.0)
           {
-            //num2 = float.Lerp(num2, 0.0f, this.m_flipTime / 0.0833333358f);
-
             num2 = MathHelper.Lerp(num2, 0.0f, this.m_flipTime / 0.0833333358f);
-
-                //this.m_flipTime -= gameTime.GetElapsedSeconds();
-                this.m_flipTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-           }
+            this.m_flipTime -= gameTime.GetElapsedSeconds();
+          }
           this.m_physics.Move(125f * this.GetParent().GetFacingX() 
               * Ease.CalcValue(Ease.EaseType.QuadInOut, MathHelper.Clamp(num2, 0.0f, 1f)));
         }

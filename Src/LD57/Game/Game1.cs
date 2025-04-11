@@ -104,8 +104,13 @@ namespace LD57
 
     protected override void Update(GameTime gameTime)
     {
-      if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+      if 
+      (
+        GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed 
+        || Keyboard.GetState().IsKeyDown(Keys.Escape)
+      )
         this.Exit();
+
       AudioManager.Update(gameTime);
       InputManager.UpdateInput(Keyboard.GetState(), GamePad.GetState(0));
       bool flag = false;
@@ -126,11 +131,14 @@ namespace LD57
         if (!this.m_graphics.IsFullScreen)
           this.SetFullScreen();
         this.m_graphics.ToggleFullScreen();
+
         if (!this.m_graphics.IsFullScreen)
           this.SetWindowSize(3f);
       }
+
       if (((!Game1.s_debug ? 1 : (!this.m_frameStep ? 1 : 0)) | (flag ? 1 : 0)) != 0)
         this.m_gameStateManager.Update(gameTime);
+
       base.Update(gameTime);
     }
 
@@ -153,14 +161,21 @@ namespace LD57
       this.m_scale = scale;
       this.m_graphics.PreferredBackBufferWidth = (int) (256.0 * (double) scale);
       this.m_graphics.PreferredBackBufferHeight = (int) (144.0 * (double) scale);
-      this.m_graphics.ApplyChanges();
+      //this.m_graphics.ApplyChanges();
     }
 
-    private void SetFullScreen() => this.SetWindowSize(this.GetFullScreenScale());
+    private void SetFullScreen()
+    {
+        this.SetWindowSize(this.GetFullScreenScale());
+    }
 
     private float GetFullScreenScale()
     {
-      return Math.Min((float) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 256), (float) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 144));
+        float screenScale = Math.Min(
+            (float) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 256), 
+            (float) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 144));
+
+        return screenScale;
     }
   }
 }
