@@ -17,6 +17,7 @@
 - Min. Win. SDK = 10240 
 - Screen scaling fixed
 - Touch control added (swipe up for jump, swipe left/right for move, swipe down or double swipe up for attack)
+- God-mode enabled :)
 
 ## Solution structure (architecture)
 - Depth_Delver "App starter" (in general, LD57 "wrapper") & Game content (xnb)
