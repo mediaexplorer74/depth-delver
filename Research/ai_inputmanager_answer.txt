@@ -1,0 +1,151 @@
+
+-------------
+
+To improve the InputManager class with touch-screen handling, we can extend the UpdateInput method to process touch inputs from the TouchCollection parameter. This will allow the class to detect touch gestures, such as taps, swipes, and holds. Additionally, we can add methods to query touch states, similar to how keyboard and gamepad inputs are handled.
+Here’s the updated code with touch-screen handling:
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
+using System.Collections.Generic;
+
+#nullable disable
+namespace LD57
+{
+  internal static class InputManager
+  {
+    private static KeyboardState m_keyboard = new KeyboardState();
+    private static KeyboardState m_keyboardPrev = new KeyboardState();
+    private static GamePadState m_gamepad = new GamePadState();
+    private static GamePadState m_gamepadPrev = new GamePadState();
+    private static Dictionary<string, Keys> m_keyboardInputs = new Dictionary<string, Keys>();
+    private static Dictionary<string, Buttons> m_gamepadInputs = new Dictionary<string, Buttons>();
+    private static List<string> m_inputNames = new List<string>();
+    private static HashSet<string> m_pressed = new HashSet<string>();
+    private static HashSet<string> m_released = new HashSet<string>();
+    private static string m_rebind = (string)null;
+
+    // New touch-related fields
+    private static TouchCollection m_touchCollection = new TouchCollection();
+    private static List<TouchLocation> m_touchesBegan = new List<TouchLocation>();
+    private static List<TouchLocation> m_touchesEnded = new List<TouchLocation>();
+    private static List<TouchLocation> m_touchesMoved = new List<TouchLocation>();
+
+    public static void SetInput(string input, Keys key, Buttons button)
+    {
+      if (!InputManager.m_keyboardInputs.ContainsKey(input))
+        InputManager.m_inputNames.Add(input);
+      InputManager.m_keyboardInputs[input] = key;
+      InputManager.m_gamepadInputs[input] = button;
+    }
+
+    public static void UpdateInput(KeyboardState k, GamePadState g, TouchCollection t)
+    {
+      InputManager.m_pressed.Clear();
+      InputManager.m_released.Clear();
+      m_touchesBegan.Clear();
+      m_touchesEnded.Clear();
+      m_touchesMoved.Clear();
+
+      if (InputManager.m_rebind == null)
+      {
+        foreach (KeyValuePair<string, Keys> keyboardInput in InputManager.m_keyboardInputs)
+        {
+          if (!InputManager.m_keyboard.IsKeyDown(keyboardInput.Value)
+              && !InputManager.m_gamepad.IsButtonDown(InputManager.m_gamepadInputs[keyboardInput.Key])
+              && (k.IsKeyDown(keyboardInput.Value)
+              || g.IsButtonDown(InputManager.m_gamepadInputs[keyboardInput.Key])))
+            InputManager.m_pressed.Add(keyboardInput.Key);
+
+          if ((InputManager.m_keyboard.IsKeyDown(keyboardInput.Value)
+           || InputManager.m_gamepad.IsButtonDown(InputManager.m_gamepadInputs[keyboardInput.Key]))
+           && !k.IsKeyDown(keyboardInput.Value) &&
+           !g.IsButtonDown(InputManager.m_gamepadInputs[keyboardInput.Key]))
+            InputManager.m_released.Add(keyboardInput.Key);
+        }
+      }
+      else
+      {
+        foreach (Keys pressedKey in k.GetPressedKeys())
+        {
+          bool flag = true;
+          foreach (KeyValuePair<string, Keys> keyboardInput in InputManager.m_keyboardInputs)
+          {
+            if (!(keyboardInput.Key == InputManager.m_rebind) && keyboardInput.Value == pressedKey)
+            {
+              flag = false;
+              break;
+            }
+          }
+          if (flag && InputManager.m_keyboard.IsKeyUp(pressedKey))
+          {
+            InputManager.m_keyboardInputs[InputManager.m_rebind] = pressedKey;
+            InputManager.m_rebind = (string)null;
+            break;
+          }
+        }
+      }
+
+      // Update touch input
+      m_touchCollection = t;
+      foreach (var touch in t)
+      {
+        switch (touch.State)
+        {
+          case TouchLocationState.Pressed:
+            m_touchesBegan.Add(touch);
+            break;
+          case TouchLocationState.Released:
+            m_touchesEnded.Add(touch);
+            break;
+          case TouchLocationState.Moved:
+            m_touchesMoved.Add(touch);
+            break;
+        }
+      }
+
+      InputManager.m_keyboardPrev = InputManager.m_keyboard;
+      InputManager.m_gamepadPrev = InputManager.m_gamepad;
+      InputManager.m_keyboard = k;
+      InputManager.m_gamepad = g;
+    }
+
+    public static bool IsTouchBegan()
+    {
+      return m_touchesBegan.Count > 0;
+    }
+
+    public static bool IsTouchEnded()
+    {
+      return m_touchesEnded.Count > 0;
+    }
+
+    public static bool IsTouchMoved()
+    {
+      return m_touchesMoved.Count > 0;
+    }
+
+    public static List<TouchLocation> GetTouchesBegan()
+    {
+      return new List<TouchLocation>(m_touchesBegan);
+    }
+
+    public static List<TouchLocation> GetTouchesEnded()
+    {
+      return new List<TouchLocation>(m_touchesEnded);
+    }
+
+    public static List<TouchLocation> GetTouchesMoved()
+    {
+      return new List<TouchLocation>(m_touchesMoved);
+    }
+  }
+}
+
+Changes Made:
+1.	Added Touch Input Handling:
+•	Introduced fields to track touch states (m_touchCollection, m_touchesBegan, m_touchesEnded, m_touchesMoved).
+•	Updated the UpdateInput method to process the TouchCollection and categorize touch events into Pressed, Released, and Moved.
+2.	New Methods for Touch Queries:
+•	Added methods like IsTouchBegan, IsTouchEnded, and IsTouchMoved to check for specific touch events.
+•	Added methods to retrieve lists of touch locations for each state (GetTouchesBegan, GetTouchesEnded, GetTouchesMoved).
+This implementation ensures that touch inputs are integrated seamlessly into the existing input management system. You can now handle touch gestures in your game logic by querying these new methods.
+

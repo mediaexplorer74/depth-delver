@@ -25,7 +25,6 @@ namespace LD57.Breakables
 
     public override void OnDealHit(DamageDesc damage)
     {
-        //this.OnDealHit(damage);
         this.m_combat.DealHit(damage);
     }
 

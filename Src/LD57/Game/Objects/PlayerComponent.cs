@@ -84,15 +84,18 @@ namespace LD57.Objects
 
     public override void Update(GameTime gameTime)
     {
-      if (InputManager.IsPressed("Jump"))
+      if (InputManager.IsPressed("Jump") || InputManager.IsSwipeUp())
         this.m_jumpBuffer = 0.116666667f;
       else if ((double) this.m_jumpBuffer > 0.0)
         this.m_jumpBuffer -= gameTime.GetElapsedSeconds();
-      if (InputManager.IsPressed("Attack"))
+      if (InputManager.IsPressed("Attack") || InputManager.IsSwipeDown() 
+                || InputManager.IsDoubleSwipeUp())
         this.m_attackBuffer = 0.116666667f;
       else if ((double) this.m_attackBuffer > 0.0)
         this.m_attackBuffer -= gameTime.GetElapsedSeconds();
+
       this.UpdateLocomotion(gameTime);
+
       if ((double) this.m_iFrames > 0.0)
       {
         this.m_iFrames -= gameTime.GetElapsedSeconds();
@@ -118,38 +121,65 @@ namespace LD57.Objects
       switch (this.m_stateMachine.GetState())
       {
         case 0:
-          this.m_abilities = PlayerComponent.Ability.GroundMove | PlayerComponent.Ability.Jump | PlayerComponent.Ability.Fall | PlayerComponent.Ability.AirMove | PlayerComponent.Ability.Attack;
+          this.m_abilities = PlayerComponent.Ability.GroundMove 
+                        | PlayerComponent.Ability.Jump 
+                        | PlayerComponent.Ability.Fall
+                        | PlayerComponent.Ability.AirMove 
+                        | PlayerComponent.Ability.Attack;
           this.m_anim.Play("Idle");
           break;
         case 1:
-          this.m_abilities = PlayerComponent.Ability.GroundMove | PlayerComponent.Ability.Jump | PlayerComponent.Ability.Fall | PlayerComponent.Ability.AirMove | PlayerComponent.Ability.Attack;
+          this.m_abilities = PlayerComponent.Ability.GroundMove 
+                        | PlayerComponent.Ability.Jump 
+                        | PlayerComponent.Ability.Fall 
+                        | PlayerComponent.Ability.AirMove
+                        | PlayerComponent.Ability.Attack;
           this.m_anim.Play("Walk");
           break;
         case 2:
-          this.m_abilities = PlayerComponent.Ability.AirMove | PlayerComponent.Ability.Attack | PlayerComponent.Ability.FastFall;
+          this.m_abilities = PlayerComponent.Ability.AirMove 
+                        | PlayerComponent.Ability.Attack 
+                        | PlayerComponent.Ability.FastFall;
           this.m_anim.Play("Jump", 1, forceReset: true);
-          this.m_physics.m_velocity.Y = -270f;
+          this.m_physics.m_velocity.Y = -500f;//-270f;
           this.m_coyoteTime = 0.0f;
           this.m_jumpBuffer = 0.0f;
           AudioManager.PlaySFX("Jump");
           break;
         case 3:
-          this.m_abilities = PlayerComponent.Ability.Jump | PlayerComponent.Ability.AirMove | PlayerComponent.Ability.Attack;
+          this.m_abilities = PlayerComponent.Ability.Jump
+                        | PlayerComponent.Ability.AirMove 
+                        | PlayerComponent.Ability.Attack;
           this.m_anim.Play("Fall", 1, forceReset: true);
           break;
         case 4:
-          this.m_abilities = PlayerComponent.Ability.GroundMove | PlayerComponent.Ability.Jump | PlayerComponent.Ability.Fall | PlayerComponent.Ability.Attack;
+          this.m_abilities = PlayerComponent.Ability.GroundMove 
+                        | PlayerComponent.Ability.Jump
+                        | PlayerComponent.Ability.Fall
+                        | PlayerComponent.Ability.Attack;
           this.m_anim.Play("Land", 1, forceReset: true);
           break;
         case 5:
-          this.m_abilities = PlayerComponent.Ability.AttackMove | this.m_abilities & PlayerComponent.Ability.FastFall;
-          this.m_anim.Play(this.m_physics.IsCollideGround() ? "AttackReady" : "AttackReadyAir", 1, forceReset: true);
+          this.m_abilities = PlayerComponent.Ability.AttackMove
+                        | this.m_abilities 
+                        & PlayerComponent.Ability.FastFall;
+
+          this.m_anim.Play(this.m_physics.IsCollideGround()
+              ? "AttackReady" 
+              : "AttackReadyAir",
+              1, forceReset: true);
+
           this.m_attackTime = 0.0f;
           this.m_attackBuffer = 0.0f;
           break;
         case 6:
-          this.m_abilities = PlayerComponent.Ability.AttackMove | this.m_abilities & PlayerComponent.Ability.FastFall;
-          this.m_anim.Play(this.m_physics.IsCollideGround() ? "Attack" : "AttackAir", 1, forceReset: true);
+          this.m_abilities = PlayerComponent.Ability.AttackMove 
+                        | this.m_abilities
+                        & PlayerComponent.Ability.FastFall;
+          this.m_anim.Play(this.m_physics.IsCollideGround() 
+              ? "Attack"
+              : "AttackAir", 
+              1, forceReset: true);
           this.m_whip.m_visible = true;
           this.m_whip.Play(this.GetLevel().m_canGrapple ? "Gold" : "Idle");
           this.m_whipDist = 0.0f;
@@ -194,19 +224,27 @@ namespace LD57.Objects
           this.SetPos(pos);
           this.m_whipDist = Math.Abs(this.GetPos().X - vector2.X) - 7f;
           this.m_whip.m_visible = true;
-          if ((double) this.m_whipDist <= 1.0)
-            this.m_stateMachine.SetNextState(this.m_hook != null ? 10 : 11);
+
+          if ((double)this.m_whipDist <= 1.0)
+          {
+              this.m_stateMachine.SetNextState(this.m_hook != null ? 10 : 11);
+          }
           else if (this.UpdateZipPos())
+          {
             this.m_stateMachine.SetNextState(3);
+          }
+
           if (this.m_grapplePhyscis != null)
             this.m_grapplePhyscis.m_carry.Add(this.m_physics);
           AudioManager.PlaySFX("Latch");
           break;
         case 10:
-          this.m_abilities = PlayerComponent.Ability.AirMove | PlayerComponent.Ability.Attack;
+          this.m_abilities = PlayerComponent.Ability.AirMove 
+                        | PlayerComponent.Ability.Attack;
           this.m_anim.Play("Jump", 1, forceReset: true);
-          this.m_physics.m_velocity.Y = -225f;
-          this.m_physics.m_velocity.X = (float) (50.0 * (double) this.GetParent().m_facing.X + 10.0 * (double) this.GetInputDir());
+          this.m_physics.m_velocity.Y = -400f;//-225f;
+          this.m_physics.m_velocity.X = (float) (50.0 * (double) this.GetParent().m_facing.X
+                        + 10.0 * (double) this.GetInputDir());
           this.m_coyoteTime = 0.0f;
           this.m_jumpBuffer = 0.0f;
           AudioManager.PlaySFX("Jump");
@@ -280,7 +318,8 @@ namespace LD57.Objects
           }
           break;
         case 5:
-          if (this.m_physics.IsCollideGround() && (double) this.m_stateMachine.GetStateTime() < 0.0833333358168602)
+          if (this.m_physics.IsCollideGround()
+                        && (double) this.m_stateMachine.GetStateTime() < 0.0833333358168602)
           {
             float inputDir = this.GetInputDir();
             if ((double) inputDir != 0.0)
@@ -318,13 +357,19 @@ namespace LD57.Objects
               break;
             }
           }
-          if (this.GetLevel().m_canGrapple && !this.m_grappleBlocked && this.m_hook == null && !this.m_physics.IsCollideGround())
+          if ( this.GetLevel().m_canGrapple
+                        && !this.m_grappleBlocked 
+                        && this.m_hook == null 
+                        && !this.m_physics.IsCollideGround() )
           {
             float time = 0.0f;
             Vector2 vector2_1 = new Vector2(5f, -1f) * this.GetParent().m_facing;
-            Vector2 vector2_2 = vector2_1 + new Vector2(this.m_whip.m_localPosition.X - 3f * this.GetParent().m_facing.X, 0.0f);
+            Vector2 vector2_2 = vector2_1 + new Vector2(this.m_whip.m_localPosition.X
+                - 3f * this.GetParent().m_facing.X, 0.0f);
             AABB aabb1 = new AABB(vector2_1 + this.GetPos(), 1f, 1f);
-            if (this.GetLevel().GetPhysicsManager().SweepAABB(aabb1, attackBox, vector2_2 - vector2_1, PhysicsComponent.CollideMask.Solid, out time, out this.m_grapplePhyscis))
+
+            if (this.GetLevel().GetPhysicsManager().SweepAABB(aabb1, attackBox, vector2_2 - vector2_1, 
+                PhysicsComponent.CollideMask.Solid, out time, out this.m_grapplePhyscis))
             {
               this.m_grapplePoint = this.GetPos() + vector2_1 + (vector2_2 - vector2_1) * time;
               this.m_stateMachine.SetNextState(9);
@@ -343,6 +388,7 @@ namespace LD57.Objects
         case 8:
           if ((double) this.m_physics.m_velocity.Y > 0.0)
             this.m_anim.Play("DeathFall", 1);
+
           if (this.m_stateMachine.CrossedTime(0.5f))
           {
             this.GetLevel().OnDeath();
@@ -394,11 +440,14 @@ namespace LD57.Objects
           break;
       }
       this.m_wasOnGround = this.m_physics.IsCollideGround();
+
       if ((double) this.GetParent().m_position.Y <= 2000.0)
         return;
-      this.m_combat.m_health = 0;
-      this.m_stateMachine.SetNextState(8);
-    }
+
+      // God-mode? =)
+      this.m_combat.m_health = 3;//0;
+      //this.m_stateMachine.SetNextState(8);
+    }//UpdateState
 
     public override void ExitState()
     {
@@ -459,9 +508,14 @@ namespace LD57.Objects
 
     public virtual void OnDeath(DamageDesc damage)
     {
-      this.m_combat.m_defenseEnabled = false;
-      this.m_stateMachine.SetNextState(8);
-      AudioManager.PlaySFX("Hurt");
+            //God-mode :)
+            //this.m_combat.m_defenseEnabled = true;
+            this.m_combat.m_defenseEnabled = false;
+            
+            this.m_combat.m_health = 3; 
+            //this.m_stateMachine.SetNextState(8);
+            
+            //AudioManager.PlaySFX("Hurt");
     }
 
     private void UpdateLocomotion(GameTime gameTime)
@@ -527,7 +581,7 @@ namespace LD57.Objects
         {
           if ((double) this.m_physics.m_velocity.Y > 0.0)
             this.m_physics.m_acceleration.Y = 640f;
-          else if (!InputManager.IsHeld("Jump"))
+          else if (!InputManager.IsHeld("Jump") && !InputManager.IsSwipeUp() )
             this.m_physics.m_acceleration.Y = 1600f;
         }
       }
@@ -546,13 +600,16 @@ namespace LD57.Objects
 
     private float GetInputDir()
     {
-      if (InputManager.IsHeld("Left"))
+      if (InputManager.IsHeld("Left") || InputManager.IsSwipeLeft())
       {
-        if (!InputManager.IsHeld("Right") || InputManager.IsPressed("Left"))
+        if ( (!InputManager.IsHeld("Right") || InputManager.IsPressed("Left")) 
+              && !InputManager.IsSwipeRight()
+         )
           return -1f;
-        return InputManager.IsPressed("Right") ? 1f : this.GetParent().m_facing.X;
+        return (InputManager.IsPressed("Right") || InputManager.IsSwipeRight()) 
+                    ? 1f : this.GetParent().m_facing.X;
       }
-      return InputManager.IsHeld("Right") ? 1f : 0.0f;
+      return (InputManager.IsHeld("Right") || InputManager.IsSwipeRight()) ? 1f : 0.0f;
     }
 
     private void AccelToSpeed(float accel, float deaccel, float speed, float time)
@@ -561,9 +618,11 @@ namespace LD57.Objects
         return;
       float num1 = (float) Math.Sign(speed);
       float num2 = accel;
-      if ((double) Math.Abs(this.m_move.X) > (double) Math.Abs(speed) || (double) this.m_move.X != 0.0 && (double) Math.Sign(this.m_move.X) != (double) num1)
+      if ((double) Math.Abs(this.m_move.X) > (double) Math.Abs(speed) 
+                || (double) this.m_move.X != 0.0 
+                && (double) Math.Sign(this.m_move.X) != (double) num1)
         num2 = deaccel;
-      float num3 = num2 * time;
+            float num3 = num2 * time;
       if ((double) Math.Abs(this.m_move.X - speed) <= (double) num3)
         this.m_move.X = speed;
       else

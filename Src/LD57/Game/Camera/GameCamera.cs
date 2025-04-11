@@ -31,7 +31,8 @@ namespace LD57.Camera
         Vector2 vector2_1 = clampedTargetPos - this.m_position;
         float y = this.m_tracking == null
                     ? this.m_lerpFactor 
-                    : MathHelper.Lerp(this.m_lerpFactor, this.m_lerpFactor * 5f, MathHelper.Clamp((float) (((double) this.m_tracking.GetPhysics().m_velocity.Y - 300.0) / 300.0), 0.0f, 1f));
+                    : MathHelper.Lerp(this.m_lerpFactor, this.m_lerpFactor * 5f, 
+                    MathHelper.Clamp((float) (((double) this.m_tracking.GetPhysics().m_velocity.Y - 300.0) / 300.0), 0.0f, 1f));
         Vector2 vector2_2 = vector2_1 * new Vector2(this.m_lerpFactor, y);
         if ((double) vector2_2.LengthSquared() < (double) this.m_minVel * (double) this.m_minVel)
         {

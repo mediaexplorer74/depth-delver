@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 using System;
 
@@ -16,42 +17,115 @@ namespace LD57
 {
   public class Game1 : Game
   {
+    private GraphicsDeviceManager graphics;
+
     public const int kWidth = 256;
     public const int kHeight = 144;
+
+    // *********************************************************************
+    Vector2 baseScreenSize = new Vector2
+    (
+            kWidth,
+            kHeight
+    );
+    private Matrix globalTransformation;
+    int backbufferWidth, backbufferHeight;
+    public static bool FirstResize = true;
+    public static Vector3 screenScale = new Vector3(1,1,1);
+    // *********************************************************************
+
+    
+    public static int ScreenWidth = kWidth * 3;
+    public static int ScreenHeight = kHeight * 3;
+    public static Vector2 ScreenSize { get; set; }
+    
     private const float kDefaultScale = 3f;
     private float m_scale = 3f;
-    private GraphicsDeviceManager m_graphics;
-    private SpriteBatch m_spriteBatch;
+   
+    private SpriteBatch spriteBatch;
     private RenderTarget2D m_renderTarget;
     private GameStateManager m_gameStateManager;
-    public static bool s_debug;
+    
+    public static bool s_debug = false; // set it *true* for F5 / F6 anim. debug
+    
     private bool m_frameStep;
 
     public Game1()
     {
-      this.m_graphics = new GraphicsDeviceManager((Game) this);
-      this.Content.RootDirectory = "Content";
+      this.graphics = new GraphicsDeviceManager((Game) this);
+#if WINDOWS_PHONE
+            TargetElapsedTime = TimeSpan.FromTicks(333333);
+#endif
+
+        Game1.ScreenSize = new Vector2(Game1.ScreenWidth, Game1.ScreenHeight);
+        graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft
+            | DisplayOrientation.LandscapeRight | DisplayOrientation.Portrait;
+            this.Content.RootDirectory = "Content";
+
       this.IsMouseVisible = true;
-      this.SetWindowSize(this.m_scale);
+
+      //this.SetWindowSize(this.m_scale);
+      
       AudioManager.SetUpLooper();
+
       InputManager.SetInput("Left", Keys.Left, Buttons.DPadLeft);
       InputManager.SetInput("Right", Keys.Right, Buttons.DPadRight);
       InputManager.SetInput("Jump", Keys.X, Buttons.A);
       InputManager.SetInput("Attack", Keys.C, Buttons.X);
+
       this.Window.Title = "Depth Delver";
     }
 
     protected override void Initialize()
     {
-      this.m_renderTarget = new RenderTarget2D(this.GraphicsDevice, 256, 144);
+      //this.graphics.PreferredBackBufferWidth = Game1.ScreenWidth;
+      //this.graphics.PreferredBackBufferHeight = Game1.ScreenHeight;
+      this.graphics.IsFullScreen = true; // set *false* only for better debug
+
+      this.graphics.ApplyChanges();
+
+      ScalePresentationArea();
+
+      //this.m_renderTarget = new RenderTarget2D(this.GraphicsDevice, 
+      //    (int)(256 * screenScale.X), 
+      //    (int)(144 * screenScale.Y));
       base.Initialize();
     }
 
-    protected override void LoadContent()
+        // ScalePresentationArea
+        public void ScalePresentationArea()
+        {
+            //Work out how much we need to scale our graphics to fill the screen
+            backbufferWidth = GraphicsDevice.PresentationParameters.BackBufferWidth - 0; // 40
+            backbufferHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
+
+            float horScaling = (float)(backbufferWidth * 1f / baseScreenSize.X);
+            float verScaling =  (float)(backbufferHeight * 1f / baseScreenSize.Y);
+
+            screenScale = new Vector3(horScaling, verScaling, 1);
+            //float screenScale = Math.Min(
+           //(float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 256),
+           //(float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 144));
+
+            globalTransformation = Matrix.CreateScale(screenScale);
+
+            //System.Diagnostics.Debug.WriteLine("Screen Size - Width["
+            //    + GraphicsDevice.PresentationParameters.BackBufferWidth + "] " +
+            //    "Height [" + GraphicsDevice.PresentationParameters.BackBufferHeight + "]");
+
+        }//ScalePresentationArea
+
+
+        protected override void LoadContent()
     {
-      this.m_spriteBatch = new SpriteBatch(this.GraphicsDevice);
+      this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+
+      // **************************************
+      ScalePresentationArea();
+      // ************************************** 
+
       SpriteManager.SetContentManager(this.Content);
-      SpriteManager.SetSpriteBatch(this.m_spriteBatch);
+      SpriteManager.SetSpriteBatch(this.spriteBatch);
       SpriteManager.LoadTexture("pixel");
       SpriteManager.LoadAnim("Player");
       SpriteManager.LoadAnim("Whip");
@@ -104,16 +178,31 @@ namespace LD57
 
     protected override void Update(GameTime gameTime)
     {
-      if 
-      (
+        // *********************************
+        //Check First Resize  & Control time where Screen has not been resized by the user
+        if (FirstResize
+            ||
+            (backbufferHeight != GraphicsDevice.PresentationParameters.BackBufferHeight
+            ||
+            backbufferWidth != GraphicsDevice.PresentationParameters.BackBufferWidth)
+            )
+        {
+            ScalePresentationArea();
+            FirstResize = false;
+        }
+        // *********************************
+
+    if
+    (
         GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed 
         || Keyboard.GetState().IsKeyDown(Keys.Escape)
       )
         this.Exit();
 
       AudioManager.Update(gameTime);
-      InputManager.UpdateInput(Keyboard.GetState(), GamePad.GetState(0));
+      InputManager.UpdateInput(Keyboard.GetState(), GamePad.GetState(0), TouchPanel.GetState());
       bool flag = false;
+
       if (Game1.s_debug)
       {
         if (InputManager.IsPressed(Keys.F5))
@@ -126,15 +215,16 @@ namespace LD57
         if (InputManager.IsPressed(Keys.F6))
           this.m_frameStep = !this.m_frameStep;
       }
-      if (InputManager.IsPressed(Keys.F4))
+     
+      /*if (InputManager.IsPressed(Keys.F4))
       {
-        if (!this.m_graphics.IsFullScreen)
+        if (!this.graphics.IsFullScreen)
           this.SetFullScreen();
-        this.m_graphics.ToggleFullScreen();
+        this.graphics.ToggleFullScreen();
 
-        if (!this.m_graphics.IsFullScreen)
+        if (!this.graphics.IsFullScreen)
           this.SetWindowSize(3f);
-      }
+      }*/
 
       if (((!Game1.s_debug ? 1 : (!this.m_frameStep ? 1 : 0)) | (flag ? 1 : 0)) != 0)
         this.m_gameStateManager.Update(gameTime);
@@ -146,36 +236,48 @@ namespace LD57
     {
       this.GraphicsDevice.SetRenderTarget(this.m_renderTarget);
       this.GraphicsDevice.Clear(Color.Black);
-      this.m_spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+
+      //this.spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+      this.spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend,
+          SamplerState.PointClamp, null, null, null, globalTransformation);
+
       this.m_gameStateManager.Draw(gameTime);
-      this.m_spriteBatch.End();
-      this.GraphicsDevice.SetRenderTarget((RenderTarget2D) null);
-      this.m_spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-      this.m_spriteBatch.Draw((Texture2D) this.m_renderTarget, new Rectangle(0, 0, (int) (256.0 * (double) this.m_scale), (int) (144.0 * (double) this.m_scale)), Color.White);
-      this.m_spriteBatch.End();
+      this.spriteBatch.End();
+      
+      /*this.GraphicsDevice.SetRenderTarget((RenderTarget2D) null);
+
+        this.spriteBatch.Begin(default, default,
+            SamplerState.PointClamp, null, null, null, globalTransformation);
+        //this.spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+
+        this.spriteBatch.Draw((Texture2D) this.m_renderTarget, new Rectangle(0, 0,
+          (int) (256.0 * (double) / * this.m_scale * /screenScale.X), 
+          (int) (144.0 * (double) / * this.m_scale * /screenScale.Y)), 
+          Color.White);
+      this.spriteBatch.End();*/
       base.Draw(gameTime);
     }
 
-    private void SetWindowSize(float scale)
-    {
-      this.m_scale = scale;
-      this.m_graphics.PreferredBackBufferWidth = (int) (256.0 * (double) scale);
-      this.m_graphics.PreferredBackBufferHeight = (int) (144.0 * (double) scale);
-      //this.m_graphics.ApplyChanges();
-    }
+    //private void SetWindowSize(float scale)
+    //{
+    //  this.m_scale = scale;
+    //  this.graphics.PreferredBackBufferWidth = (int) (256.0 * (double) scale);
+    //  this.graphics.PreferredBackBufferHeight = (int) (144.0 * (double) scale);
+    //  //this.graphics.ApplyChanges();
+    //}
 
-    private void SetFullScreen()
-    {
-        this.SetWindowSize(this.GetFullScreenScale());
-    }
+    //private void SetFullScreen()
+    //{
+    //    this.SetWindowSize(this.GetFullScreenScale());
+    //}
 
-    private float GetFullScreenScale()
-    {
-        float screenScale = Math.Min(
-            (float) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 256), 
-            (float) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 144));
-
-        return screenScale;
-    }
+    //private float GetFullScreenScale()
+    //{
+    //    float screenScale = Math.Min(
+    //        (float) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 256), 
+    //        (float) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 144));
+    //
+    //    return screenScale;
+    //}
   }
 }

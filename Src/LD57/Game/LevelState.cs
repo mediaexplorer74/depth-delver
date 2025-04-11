@@ -309,7 +309,10 @@ namespace LD57
 
     public List<HookComponent> GetHooks() => this.m_hooks;
 
-    public void OnDeath() => this.m_stateMachine.SetNextState(2);
+    public void OnDeath()
+    {
+        this.m_stateMachine.SetNextState(2);
+    }
 
     public void OnRoomTransition()
     {

@@ -137,21 +137,28 @@ namespace LD57.Physics
         {
           if ((double) vector1.Y < 0.0)
             physicsComponent.m_carry.Add(physics);
-          move = (float) ((double) move * (double) num2 + 1.0 / 1000.0 * (double) Math.Sign(vector1.Dot(axis)));
+          move = (float) ((double) move * (double) num2 + 1.0 / 1000.0
+                        * (double) Math.Sign(vector1.Dot(axis)));
         }
         if ((double) vector1.Dot(axis) != 0.0)
         {
           bool flag = (double) vector1.Dot(axis) > 0.0;
-          float num3 = !flag ? Math.Min(physics.m_velocity.Dot(axis), 0.0f) : Math.Max(physics.m_velocity.Dot(axis), 0.0f);
+          float num3 = !flag
+                        ? Math.Min(physics.m_velocity.Dot(axis), 0.0f) 
+                        : Math.Max(physics.m_velocity.Dot(axis), 0.0f);
           if ((double) axis.X != 0.0)
           {
             physics.m_velocity.X = num3;
-            physics.m_lastCollideDir |= flag ? PhysicsComponent.CollideDir.Left : PhysicsComponent.CollideDir.Right;
+            physics.m_lastCollideDir |= flag 
+                            ? PhysicsComponent.CollideDir.Left 
+                            : PhysicsComponent.CollideDir.Right;
           }
           else
           {
             physics.m_velocity.Y = num3;
-            physics.m_lastCollideDir |= flag ? PhysicsComponent.CollideDir.Up : PhysicsComponent.CollideDir.Down;
+            physics.m_lastCollideDir |= flag 
+                            ? PhysicsComponent.CollideDir.Up 
+                            : PhysicsComponent.CollideDir.Down;
           }
         }
       }

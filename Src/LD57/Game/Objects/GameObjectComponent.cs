@@ -82,7 +82,8 @@ namespace LD57.Objects
     public override void Update(GameTime gameTime)
     {
       this.m_stateMachine.Update(gameTime);
-      if (this.m_spawnPoint == null || !this.m_cullable || this.m_level.GetRoomManager().GetCurRoom() == this.m_spawnPoint.GetRoom() || this.IsOnScreen())
+      if (this.m_spawnPoint == null || !this.m_cullable 
+                || this.m_level.GetRoomManager().GetCurRoom() == this.m_spawnPoint.GetRoom() || this.IsOnScreen())
         return;
       this.GetParent().Destroy();
     }

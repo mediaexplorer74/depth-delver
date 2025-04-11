@@ -40,7 +40,7 @@ namespace LD57.Enemies
 
     public override void InitState()
     {
-      if (this.m_stateMachine.GetState() != 0)
+      if (this.m_stateMachine.GetState() != /*0*/(int)EnemyState.Death)
         return;
       this.m_combat.m_defenseEnabled = false;
       this.m_combat.m_attackEnabled = false;
@@ -53,7 +53,7 @@ namespace LD57.Enemies
 
     public override void UpdateState(GameTime gameTime)
     {
-      if (this.m_stateMachine.GetState() != 0)
+      if (this.m_stateMachine.GetState() != /*0*/(int)EnemyState.Death)
         return;
       if (!this.IsOnScreen())
         this.GetParent().Destroy();

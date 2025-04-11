@@ -53,12 +53,18 @@ namespace LD57.Combat
     {
       this.m_timeouts.Add(new DamageTimeout(damage.m_timeout, damage.m_guid));
       this.m_health -= damage.m_damage;
+
       if (this.m_implementor == null)
         return;
-      if (this.m_health <= 0)
-        this.m_implementor.OnDeath(damage);
-      else
-        this.m_implementor.OnTakeDamage(damage);
+
+        if (this.m_health <= 0)
+        {              
+           this.m_implementor.OnDeath(damage);
+        }
+        else
+        {
+            this.m_implementor.OnTakeDamage(damage);
+        }
     }
 
     public void DealHit(DamageDesc damage)
