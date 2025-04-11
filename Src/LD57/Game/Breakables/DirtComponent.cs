@@ -23,14 +23,16 @@ namespace LD57.Breakables
       this.m_combat.m_defenseBoxes[0] = new AABB(Vector2.Zero, 16f, 16f);
     }
 
-        public override void OnDealHit(DamageDesc damage)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override bool ValidateHit(DamageDesc damage)
-        {
-            throw new System.NotImplementedException();
-        }
+    public override void OnDealHit(DamageDesc damage)
+    {
+        //this.OnDealHit(damage);
+        this.m_combat.DealHit(damage);
     }
+
+    public override bool ValidateHit(DamageDesc damage)
+    {
+        bool result = this.m_combat.ValidateHit(damage);
+        return result;
+    }
+  }
 }

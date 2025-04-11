@@ -1,4 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: LD57.Combat.CombatManager
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
@@ -38,7 +38,12 @@ namespace LD57.Combat
           {
             foreach (CombatComponent combatComponent2 in this.m_combatComponents)
             {
-              if (combatComponent2 != combatComponent1 && !combatComponent1.GetParent().IsDestroyed() && combatComponent2.m_attackEnabled && (combatComponent2.m_attackMask & combatComponent1.m_defenseMask) != (CombatComponent.CombatMask) 0 && !combatComponent1.IsTimeout(combatComponent2.m_damage.m_guid))
+              if 
+              ( combatComponent2 != combatComponent1 && !combatComponent1.GetParent().IsDestroyed() 
+                && combatComponent2.m_attackEnabled && (combatComponent2.m_attackMask
+                & combatComponent1.m_defenseMask) != (CombatComponent.CombatMask) 0
+                && !combatComponent1.IsTimeout(combatComponent2.m_damage.m_guid) 
+              )
               {
                 bool flag = false;
                 for (int index2 = 0; index2 < combatComponent2.m_attackBoxes.Count<AABB>(); ++index2)

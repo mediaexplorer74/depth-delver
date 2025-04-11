@@ -1,4 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: LD57.Objects.PlayerComponent
 // Assembly: LD57, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: BA033186-302C-4CE9-B79A-BD6D93232982
@@ -439,7 +439,10 @@ namespace LD57.Objects
       }
     }
 
-    public virtual bool ValidateHit(DamageDesc damage) => (double) this.m_iFrames <= 0.0;
+    public virtual bool ValidateHit(DamageDesc damage)
+    {
+        return (double)this.m_iFrames <= 0.0;
+    }
 
     public virtual void OnDealHit(DamageDesc damage)
     {
