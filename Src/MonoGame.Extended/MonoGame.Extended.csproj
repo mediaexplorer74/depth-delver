@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{14E44341-1C33-41F7-9954-AE2AB532F87B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MonoGame.Extended</RootNamespace>
+    <AssemblyName>MonoGame.Extended</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <PlatformTarget>ARM64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <PlatformTarget>ARM64</PlatformTarget>
+    <OutputPath>bin\ARM64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AnimationComponent.cs" />
+    <Compile Include="Animations\AnimationController.cs" />
+    <Compile Include="Animations\AnimationEvent.cs" />
+    <Compile Include="Animations\AnimationEventTrigger.cs" />
+    <Compile Include="Animations\IAnimation.cs" />
+    <Compile Include="Animations\IAnimationController.cs" />
+    <Compile Include="Animations\IAnimationFrame.cs" />
+    <Compile Include="BitmapFonts\BitmapFont.cs" />
+    <Compile Include="BitmapFonts\BitmapFont.Extensions.cs" />
+    <Compile Include="BitmapFonts\BitmapFontCharacter.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="Collections\Bag.cs" />
+    <Compile Include="Collections\Deque.cs" />
+    <Compile Include="Collections\DictionaryExtensions.cs" />
+    <Compile Include="Collections\IObservableCollection.cs" />
+    <Compile Include="Collections\IPoolable.cs" />
+    <Compile Include="Collections\ItemEventArgs.cs" />
+    <Compile Include="Collections\KeyedCollection.cs" />
+    <Compile Include="Collections\ListExtensions.cs" />
+    <Compile Include="Collections\ObjectPool.cs" />
+    <Compile Include="Collections\ObservableCollection.cs" />
+    <Compile Include="Collections\Pool.cs" />
+    <Compile Include="Collisions\CollisionComponent.cs" />
+    <Compile Include="Collisions\CollisionEventArgs.cs" />
+    <Compile Include="Collisions\ICollisionActor.cs" />
+    <Compile Include="Collisions\ISpaceAlgorithm.cs" />
+    <Compile Include="Collisions\Layers\Layer.cs" />
+    <Compile Include="Collisions\Layers\UndefinedLayerException.cs" />
+    <Compile Include="Collisions\QuadTree\QuadTree.cs" />
+    <Compile Include="Collisions\QuadTree\QuadTreeData.cs" />
+    <Compile Include="Collisions\QuadTree\QuadTreeSpace.cs" />
+    <Compile Include="Collisions\SpatialHash.cs" />
+    <Compile Include="ColorExtensions.cs" />
+    <Compile Include="ColorHelper.cs" />
+    <Compile Include="Content\BitmapFonts\BitmapFontFileContent.cs" />
+    <Compile Include="Content\BitmapFonts\BitmapFontFileReader.cs" />
+    <Compile Include="Content\BitmapFonts\CollectionsMarshal.cs" />
+    <Compile Include="Content\ContentManagerExtensions.cs" />
+    <Compile Include="Content\ContentReaderExtensions.cs" />
+    <Compile Include="Content\ContentReaders\BitmapFontContentReader.cs" />
+    <Compile Include="Content\ContentReaders\JsonContentTypeReader.cs" />
+    <Compile Include="Content\ContentReaders\Texture2DAtlasReader.cs" />
+    <Compile Include="Content\DefaultColorProcessor.cs" />
+    <Compile Include="Content\ExtendedContentManager.cs" />
+    <Compile Include="Content\TexturePacker\Frame.cs" />
+    <Compile Include="Content\TexturePacker\JsonPropertyNameAttribute.cs" />
+    <Compile Include="Content\TexturePacker\Meta.cs" />
+    <Compile Include="Content\TexturePacker\Region.cs" />
+    <Compile Include="Content\TexturePacker\TexturePackerFileContent.cs" />
+    <Compile Include="Content\TexturePacker\TexturePackerFileContent1.cs" />
+    <Compile Include="Content\TexturePacker\TexturePackerFileReader.cs" />
+    <Compile Include="Content\Tiled\TiledMapContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapEllipseContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapGroupLayerContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapImageContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapImageLayerContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapLayerContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapLayerModelContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapObjectContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapObjectDrawOrderContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapObjectLayerContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapObjectTemplateContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapOrientationContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapPolygonContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapPolylineContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapPropertyContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapStaggerAxisContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapStaggerIndexContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapTileContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapTileDrawOrderContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapTileLayerContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapTileLayerDataChunkContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapTileLayerDataContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapTileOffsetContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapTilesetContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapTilesetGridContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapTilesetTileAnimationFrameContent.cs" />
+    <Compile Include="Content\Tiled\TiledMapTilesetTileContent.cs" />
+    <Compile Include="ECS\Aspect.cs" />
+    <Compile Include="ECS\AspectBuilder.cs" />
+    <Compile Include="ECS\BitArrayExtensions.cs" />
+    <Compile Include="ECS\ComponentManager.cs" />
+    <Compile Include="ECS\ComponentMapper.cs" />
+    <Compile Include="ECS\ComponentType.cs" />
+    <Compile Include="ECS\Entity.cs" />
+    <Compile Include="ECS\EntityManager.cs" />
+    <Compile Include="ECS\EntitySubscription.cs" />
+    <Compile Include="ECS\Systems\DrawSystem.cs" />
+    <Compile Include="ECS\Systems\EntityDrawSystem.cs" />
+    <Compile Include="ECS\Systems\EntityProcessingSystem.cs" />
+    <Compile Include="ECS\Systems\EntitySystem.cs" />
+    <Compile Include="ECS\Systems\EntityUpdateSystem.cs" />
+    <Compile Include="ECS\Systems\ISystem.cs" />
+    <Compile Include="ECS\Systems\UpdateSystem.cs" />
+    <Compile Include="ECS\World.cs" />
+    <Compile Include="ECS\WorldBuilder.cs" />
+    <Compile Include="FramesPerSecondCounter.cs" />
+    <Compile Include="FramesPerSecondCounterComponent.cs" />
+    <Compile Include="GameComponentCollectionExtensions.cs" />
+    <Compile Include="GameTimeExtensions.cs" />
+    <Compile Include="Graphics\AnimatedSprite.cs" />
+    <Compile Include="Graphics\Batcher.cs" />
+    <Compile Include="Graphics\Batcher2D.cs" />
+    <Compile Include="Graphics\Effects\DefaultEffect.cs" />
+    <Compile Include="Graphics\Effects\EffectResource.cs" />
+    <Compile Include="Graphics\Effects\ITextureEffect.cs" />
+    <Compile Include="Graphics\Effects\MatrixChainEffect.cs" />
+    <Compile Include="Graphics\FlipFlags.cs" />
+    <Compile Include="Graphics\Geometry\GeometryBuilder.cs" />
+    <Compile Include="Graphics\Geometry\GeometryBuilder2D.cs" />
+    <Compile Include="Graphics\GraphicsDevice.Extensions.cs" />
+    <Compile Include="Graphics\IBatchDrawCallInfo.cs" />
+    <Compile Include="Graphics\IMatrixChainEffect.cs" />
+    <Compile Include="Graphics\NinePatch.cs" />
+    <Compile Include="Graphics\PrimitiveTypeExtensions.cs" />
+    <Compile Include="Graphics\RenderTarget2DExtensions.cs" />
+    <Compile Include="Graphics\Sprite.cs" />
+    <Compile Include="Graphics\SpriteBatch.Extensions.cs" />
+    <Compile Include="Graphics\SpriteSheet.cs" />
+    <Compile Include="Graphics\SpriteSheetAnimation.cs" />
+    <Compile Include="Graphics\SpriteSheetAnimationBuilder.cs" />
+    <Compile Include="Graphics\SpriteSheetAnimationFrame.cs" />
+    <Compile Include="Graphics\Texture2DAtlas.cs" />
+    <Compile Include="Graphics\Texture2DRegion.cs" />
+    <Compile Include="Graphics\Texture2DRegion.Extensions.cs" />
+    <Compile Include="HslColor.cs" />
+    <Compile Include="IColorable.cs" />
+    <Compile Include="IEquatableByRef.cs" />
+    <Compile Include="IMovable.cs" />
+    <Compile Include="Input\ExtendedPlayerIndex.cs" />
+    <Compile Include="Input\InputListeners\GamePadEventArgs.cs" />
+    <Compile Include="Input\InputListeners\GamePadListener.cs" />
+    <Compile Include="Input\InputListeners\GamePadListenerSettings.cs" />
+    <Compile Include="Input\InputListeners\IInputService.cs" />
+    <Compile Include="Input\InputListeners\InputListener.cs" />
+    <Compile Include="Input\InputListeners\InputListenerComponent.cs" />
+    <Compile Include="Input\InputListeners\InputListenerSettings.cs" />
+    <Compile Include="Input\InputListeners\KeyboardEventArgs.cs" />
+    <Compile Include="Input\InputListeners\KeyboardListener.cs" />
+    <Compile Include="Input\InputListeners\KeyboardListenerSettings.cs" />
+    <Compile Include="Input\InputListeners\KeyboardModifiers.cs" />
+    <Compile Include="Input\InputListeners\MouseEventArgs.cs" />
+    <Compile Include="Input\InputListeners\MouseListener.cs" />
+    <Compile Include="Input\InputListeners\MouseListenerSettings.cs" />
+    <Compile Include="Input\InputListeners\TouchEventArgs.cs" />
+    <Compile Include="Input\InputListeners\TouchListener.cs" />
+    <Compile Include="Input\InputListeners\TouchListenerSettings.cs" />
+    <Compile Include="Input\KeyboardExtended.cs" />
+    <Compile Include="Input\KeyboardState.Extensions.cs" />
+    <Compile Include="Input\KeyboardStateExtended.cs" />
+    <Compile Include="Input\MouseButton.cs" />
+    <Compile Include="Input\MouseExtended.cs" />
+    <Compile Include="Input\MouseStateExtended.cs" />
+    <Compile Include="IRectangular.cs" />
+    <Compile Include="IRotatable.cs" />
+    <Compile Include="IScalable.cs" />
+    <Compile Include="ISizable.cs" />
+    <Compile Include="MathExtended.cs" />
+    <Compile Include="Math\Angle.cs" />
+    <Compile Include="Math\BoundingRectangle.cs" />
+    <Compile Include="Math\CircleF.cs" />
+    <Compile Include="Math\EllipseF.cs" />
+    <Compile Include="Math\FastRandom.cs" />
+    <Compile Include="Math\FloatHelper.cs" />
+    <Compile Include="Math\Matrix3x2.cs" />
+    <Compile Include="Math\MatrixExtensions.cs" />
+    <Compile Include="Math\OrientedRectangle.cs" />
+    <Compile Include="Math\PrimitivesHelper.cs" />
+    <Compile Include="Math\RandomExtensions.cs" />
+    <Compile Include="Math\Range.cs" />
+    <Compile Include="Math\Ray2.cs" />
+    <Compile Include="Math\RectangleF.cs" />
+    <Compile Include="Math\Segment2.cs" />
+    <Compile Include="Math\ShapeExtensions.cs" />
+    <Compile Include="Math\ShapeF.cs" />
+    <Compile Include="Math\Size.cs" />
+    <Compile Include="Math\SizeF.cs" />
+    <Compile Include="Math\Thickness.cs" />
+    <Compile Include="Math\Triangulation\CyclicalList.cs" />
+    <Compile Include="Math\Triangulation\IndexableCyclicalLinkedList.cs" />
+    <Compile Include="Math\Triangulation\LineSegment.cs" />
+    <Compile Include="Math\Triangulation\Triangle.cs" />
+    <Compile Include="Math\Triangulation\Triangulator.cs" />
+    <Compile Include="Math\Triangulation\Vertex.cs" />
+    <Compile Include="Math\Vector2Extensions.cs" />
+    <Compile Include="OrthographicCamera.cs" />
+    <Compile Include="Particles\FastRandomExtensions.cs" />
+    <Compile Include="Particles\LineSegment.cs" />
+    <Compile Include="Particles\Modifiers\AgeModifier.cs" />
+    <Compile Include="Particles\Modifiers\Containers\CircleContainerModifier.cs" />
+    <Compile Include="Particles\Modifiers\Containers\RectangleContainerModifier.cs" />
+    <Compile Include="Particles\Modifiers\Containers\RectangleLoopContainerModifier.cs" />
+    <Compile Include="Particles\Modifiers\DragModifier.cs" />
+    <Compile Include="Particles\Modifiers\Interpolators\ColorInterpolator.cs" />
+    <Compile Include="Particles\Modifiers\Interpolators\HueInterpolator.cs" />
+    <Compile Include="Particles\Modifiers\Interpolators\Interpolator.cs" />
+    <Compile Include="Particles\Modifiers\Interpolators\OpacityInterpolator.cs" />
+    <Compile Include="Particles\Modifiers\Interpolators\RotationInterpolator.cs" />
+    <Compile Include="Particles\Modifiers\Interpolators\ScaleInterpolator.cs" />
+    <Compile Include="Particles\Modifiers\LinearGravityModifier.cs" />
+    <Compile Include="Particles\Modifiers\Modifier.cs" />
+    <Compile Include="Particles\Modifiers\OpacityFastFadeModifier.cs" />
+    <Compile Include="Particles\Modifiers\RotationModifier.cs" />
+    <Compile Include="Particles\Modifiers\VelocityColorModifier.cs" />
+    <Compile Include="Particles\Modifiers\VelocityModifier.cs" />
+    <Compile Include="Particles\Modifiers\VortexModifier.cs" />
+    <Compile Include="Particles\Particle.cs" />
+    <Compile Include="Particles\ParticleBuffer.cs" />
+    <Compile Include="Particles\ParticleEffect.cs" />
+    <Compile Include="Particles\ParticleEmitter.cs" />
+    <Compile Include="Particles\ParticleExtensions.cs" />
+    <Compile Include="Particles\ParticleModifierExecutionStrategy.cs" />
+    <Compile Include="Particles\ParticleReleaseParameters.cs" />
+    <Compile Include="Particles\Profiles\BoxFillProfile.cs" />
+    <Compile Include="Particles\Profiles\BoxProfile.cs" />
+    <Compile Include="Particles\Profiles\BoxUniformProfile.cs" />
+    <Compile Include="Particles\Profiles\CircleProfile.cs" />
+    <Compile Include="Particles\Profiles\LineProfile.cs" />
+    <Compile Include="Particles\Profiles\PointProfile.cs" />
+    <Compile Include="Particles\Profiles\Profile.cs" />
+    <Compile Include="Particles\Profiles\RingProfile.cs" />
+    <Compile Include="Particles\Profiles\SprayProfile.cs" />
+    <Compile Include="Particles\Serialization\InterpolatorJsonConverter.cs" />
+    <Compile Include="Particles\Serialization\JsonSerializerOptions.cs" />
+    <Compile Include="Particles\Serialization\ModifierExecutionStrategyJsonConverter.cs" />
+    <Compile Include="Particles\Serialization\ModifierJsonConverter.cs" />
+    <Compile Include="Particles\Serialization\ParticleJsonSerializerOptionsProvider.cs" />
+    <Compile Include="Particles\Serialization\ProfileJsonConverter.cs" />
+    <Compile Include="Particles\Serialization\TimeSpanJsonConverter.cs" />
+    <Compile Include="Particles\Serialization\Utf8JsonReader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rectangle.Extensions.cs" />
+    <Compile Include="RectangleF.Extensions.cs" />
+    <Compile Include="Screens\GameScreen.cs" />
+    <Compile Include="Screens\Screen.cs" />
+    <Compile Include="Screens\ScreenManager.cs" />
+    <Compile Include="Screens\Transitions\ExpandTransition.cs" />
+    <Compile Include="Screens\Transitions\FadeTransition.cs" />
+    <Compile Include="Screens\Transitions\Transition.cs" />
+    <Compile Include="Serialization\Json\BaseTypeJsonConverter.cs" />
+    <Compile Include="Serialization\Json\ColorJsonConverter.cs" />
+    <Compile Include="Serialization\Json\ContentManagerJsonConverter.cs" />
+    <Compile Include="Serialization\Json\FloatStringConverter.cs" />
+    <Compile Include="Serialization\Json\HslColorJsonConverter.cs" />
+    <Compile Include="Serialization\Json\JsonContentLoader.cs" />
+    <Compile Include="Serialization\Json\JsonDocument.cs" />
+    <Compile Include="Serialization\Json\JsonNamingPolicy.cs" />
+    <Compile Include="Serialization\Json\MonoGameJsonSerializerOptionsProvider.cs" />
+    <Compile Include="Serialization\Json\NinePatchJsonConverter.cs" />
+    <Compile Include="Serialization\Json\RangeJsonConverter.cs" />
+    <Compile Include="Serialization\Json\RectangleFJsonConverter.cs" />
+    <Compile Include="Serialization\Json\Size2JsonConverter.cs" />
+    <Compile Include="Serialization\Json\SizeJsonConverter.cs" />
+    <Compile Include="Serialization\Json\TextContentLoader.cs" />
+    <Compile Include="Serialization\Json\TextureAtlasJsonConverter.cs" />
+    <Compile Include="Serialization\Json\TextureRegion2DJsonConverter.cs" />
+    <Compile Include="Serialization\Json\TextureRegionService.cs" />
+    <Compile Include="Serialization\Json\ThicknessJsonConverter.cs" />
+    <Compile Include="Serialization\Json\Utf8JsonReaderExtensions.cs" />
+    <Compile Include="Serialization\Json\Utf8JsonWriter.cs" />
+    <Compile Include="Serialization\Json\Vector2JsonConverter.cs" />
+    <Compile Include="Serialization\Xml\XmlNode.Extensions.cs" />
+    <Compile Include="Shapes\Polygon.cs" />
+    <Compile Include="Shapes\Polyline.cs" />
+    <Compile Include="SimpleDrawableGameComponent.cs" />
+    <Compile Include="SimpleGameComponent.cs" />
+    <Compile Include="System\Runtime\CompilerServices\Unsafe.cs" />
+    <Compile Include="Tiled\Renderers\TiledMapAnimatedLayerModel.cs" />
+    <Compile Include="Tiled\Renderers\TiledMapAnimatedLayerModelBuilder.cs" />
+    <Compile Include="Tiled\Renderers\TiledMapEffect.cs" />
+    <Compile Include="Tiled\Renderers\TiledMapLayerModel.cs" />
+    <Compile Include="Tiled\Renderers\TiledMapLayerModelBuilder.cs" />
+    <Compile Include="Tiled\Renderers\TiledMapModel.cs" />
+    <Compile Include="Tiled\Renderers\TiledMapModelBuilder.cs" />
+    <Compile Include="Tiled\Renderers\TiledMapRenderer.cs" />
+    <Compile Include="Tiled\Renderers\TiledMapStaticLayerModel.cs" />
+    <Compile Include="Tiled\Renderers\TiledMapStaticLayerModelBuilder.cs" />
+    <Compile Include="Tiled\TiledMap.cs" />
+    <Compile Include="Tiled\TiledMapEllipseObject.cs" />
+    <Compile Include="Tiled\TiledMapGroupLayer.cs" />
+    <Compile Include="Tiled\TiledMapHelper.cs" />
+    <Compile Include="Tiled\TiledMapImageLayer.cs" />
+    <Compile Include="Tiled\TiledMapLayer.cs" />
+    <Compile Include="Tiled\TiledMapLayerType.cs" />
+    <Compile Include="Tiled\TiledMapObject.cs" />
+    <Compile Include="Tiled\TiledMapObjectDrawOrder.cs" />
+    <Compile Include="Tiled\TiledMapObjectLayer.cs" />
+    <Compile Include="Tiled\TiledMapObjectType.cs" />
+    <Compile Include="Tiled\TiledMapOrientation.cs" />
+    <Compile Include="Tiled\TiledMapPolygonObject.cs" />
+    <Compile Include="Tiled\TiledMapPolylineObject.cs" />
+    <Compile Include="Tiled\TiledMapProperties.cs" />
+    <Compile Include="Tiled\TiledMapPropertyValue.cs" />
+    <Compile Include="Tiled\TiledMapReader.cs" />
+    <Compile Include="Tiled\TiledMapRectangleObject.cs" />
+    <Compile Include="Tiled\TiledMapTile.cs" />
+    <Compile Include="Tiled\TiledMapTileDrawOrder.cs" />
+    <Compile Include="Tiled\TiledMapTileFlipFlags.cs" />
+    <Compile Include="Tiled\TiledMapTileLayer.cs" />
+    <Compile Include="Tiled\TiledMapTileObject.cs" />
+    <Compile Include="Tiled\TiledMapTileset.cs" />
+    <Compile Include="Tiled\TiledMapTilesetAnimatedTile.cs" />
+    <Compile Include="Tiled\TiledMapTilesetReader.cs" />
+    <Compile Include="Tiled\TiledMapTilesetTile.cs" />
+    <Compile Include="Tiled\TiledMapTilesetTileAnimationFrame.cs" />
+    <Compile Include="Timers\ContinuousClock.cs" />
+    <Compile Include="Timers\CountdownTimer.cs" />
+    <Compile Include="Timers\GameTimer.cs" />
+    <Compile Include="Timers\TimerState.cs" />
+    <Compile Include="Transform.cs" />
+    <Compile Include="Tweening\ColorTween.cs" />
+    <Compile Include="Tweening\EasingFunctions.cs" />
+    <Compile Include="Tweening\LinearOperations.cs" />
+    <Compile Include="Tweening\LinearTween.cs" />
+    <Compile Include="Tweening\Tween.cs" />
+    <Compile Include="Tweening\Tweener.cs" />
+    <Compile Include="Tweening\TweenFieldMember.cs" />
+    <Compile Include="Tweening\TweenMember.cs" />
+    <Compile Include="Tweening\TweenPropertyMember.cs" />
+    <Compile Include="VectorDraw\PrimitiveBatch.cs" />
+    <Compile Include="VectorDraw\PrimitiveDrawing.cs" />
+    <Compile Include="ViewportAdapters\BoxingViewportAdapter.cs" />
+    <Compile Include="ViewportAdapters\DefaultViewportAdapter.cs" />
+    <Compile Include="ViewportAdapters\ScalingViewportAdapter.cs" />
+    <Compile Include="ViewportAdapters\ViewportAdapter.cs" />
+    <Compile Include="ViewportAdapters\WindowViewportAdapter.cs" />
+    <EmbeddedResource Include="Properties\MonoGame.Extended.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.14</Version>
+    </PackageReference>
+    <PackageReference Include="MonoGame.Framework.WindowsUniversal">
+      <Version>3.7.1.189</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="System.Memory">
+      <Version>4.5.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Xml.XPath">
+      <Version>4.3.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Graphics\Effects\Resources\DefaultEffect.dx11.mgfxo" />
+    <None Include="Graphics\Effects\Resources\DefaultEffect.ogl.mgfxo" />
+    <None Include="Graphics\Effects\Resources\Macros.fxh" />
+    <None Include="Graphics\Effects\Resources\Structures.fxh" />
+    <None Include="Particles\Modifiers\Interpolators\VelocityInterpolator" />
+    <None Include="rebuild-effects.sh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Graphics\Effects\Resources\DefaultEffect.fx" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
